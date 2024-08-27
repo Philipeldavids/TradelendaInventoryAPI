@@ -1,0 +1,6 @@
+@TradelendaInventoryAPI_HostAddress = http://localhost:5107
+
+GET {{TradelendaInventoryAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

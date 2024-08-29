@@ -7,5 +7,11 @@ namespace TradelendaInventoryAPI.Controllers
     [ApiController]
     public class InventoryManagementController : ControllerBase
     {
+        [HttpGet("GetProducts")]
+
+        public ActionResult GetProducts() 
+        { 
+
+        }
     }
 }

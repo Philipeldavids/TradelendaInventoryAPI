@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Infracstructure.Models
 {
-    public class Stocks
+    public class Stock
     {
         public string StockId { get; set; }
         public string WarehouseID { get; set; }

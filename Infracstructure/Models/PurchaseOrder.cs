@@ -1,6 +1,7 @@
 ﻿using Infracstructure.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ namespace Infracstructure.Models
 {
     public class PurchaseOrder
     {
-        public Guid OrderId { get; set; }
+        [Key]
+        public Guid OrderId { get; set; } 
         public Guid CustomerId { get; set; }
         public List<OrderItem> Items { get; set; }
         public OrderStatus Status { get; set; }
@@ -17,7 +19,7 @@ namespace Infracstructure.Models
         public DateTime? OrderFulfilledAt { get; set; }
         public decimal TotalAmount { get; set; }
 
-       public Customer Customer {  get; set; }  
+        public Customer Customer {  get; set; }  
 
 
     }

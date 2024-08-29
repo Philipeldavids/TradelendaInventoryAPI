@@ -18,5 +18,15 @@ namespace DataLayer
         }
 
         public DbSet<AppUser> Users { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Define composite primary key using HasKey
+            modelBuilder.Entity<AppUser>()
+                .HasNoKey();
+
+            // Other configurations can go here
+        }
     }
 }

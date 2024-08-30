@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Infracstructure.Models.Enums;
 
@@ -14,8 +16,12 @@ namespace Infracstructure.Models
         public string ProductId { get; set; } = Guid.NewGuid().ToString();
 
         public string ProductName { get; set; }
-        public string ProductDescription { get; set; } 
+        public string ProductDescription { get; set; }       
+        
         public Category Category { get; set; }
+
+        public string CategoryId { get; set; }
+        
         public Brand Brand { get; set; }
 
         public string Barcode { get; set; }

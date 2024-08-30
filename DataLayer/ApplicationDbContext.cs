@@ -34,6 +34,18 @@ namespace DataLayer
             modelBuilder.Entity<AppUser>()
                 .HasNoKey();
 
+            modelBuilder.Entity<Product>()
+                .HasOne(p=> p.Category);// Each Product has one Category
+                                    // Each Category can have many Products
+            
+
+            modelBuilder.Entity<PurchaseOrder>()
+                .HasOne(p => p.Customer)
+                .WithMany(c => c.PurchaseOrders)
+                .HasForeignKey(p => p.CustomerId);
+            
+            modelBuilder.Entity<Stock>().HasNoKey();
+
             // Other configurations can go here
         }
     }

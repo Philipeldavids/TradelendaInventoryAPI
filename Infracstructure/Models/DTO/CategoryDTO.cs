@@ -4,19 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infracstructure.Models
+namespace Infracstructure.Models.DTO
 {
-    public class Category
+    public class CategoryDTO
     {
-        public string CategoryId { get; set; } = Guid.NewGuid().ToString();
         public string CategoryName { get; set; }
+       
         public string CategorySLug { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
         public bool Status { get; set; }
-
-
 
     }
 }

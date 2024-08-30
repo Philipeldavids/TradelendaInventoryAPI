@@ -11,8 +11,8 @@ namespace Infracstructure.Models
     public class PurchaseOrder
     {
         [Key]
-        public Guid OrderId { get; set; } 
-        public Guid CustomerId { get; set; }
+        public string OrderId { get; set; } = Guid.NewGuid().ToString();
+        public string CustomerId { get; set; } = Guid.NewGuid().ToString();
         public List<OrderItem> Items { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime OrderPlacedAt { get; set; }

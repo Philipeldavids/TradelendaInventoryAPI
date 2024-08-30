@@ -16,5 +16,6 @@ namespace Infracstructure.Models
         public string Address { get; set; }
 
 
+
     }
 }

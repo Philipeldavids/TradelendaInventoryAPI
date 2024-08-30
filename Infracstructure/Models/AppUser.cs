@@ -25,5 +25,6 @@ namespace Infracstructure.Models
         public bool Status {  get; set; }
         public Roles Userrole { get; set; }
 
+
     }
 }

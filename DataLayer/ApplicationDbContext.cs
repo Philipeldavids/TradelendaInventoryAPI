@@ -1,5 +1,6 @@
 ﻿
 using Infracstructure.Models;
+using Infracstructure.Models.UserManagement;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +17,32 @@ namespace DataLayer
         {
 
         }
+
+
+        //public DbSet<Infracstructure.Models.UserManagement.User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            var permissions = new List<Permission>
+            {
+                new Permission { PermissionId = Guid.NewGuid(), PermissionName = Permissions.ViewUsers.ToString(), Description = "Can view users" },
+                new Permission { PermissionId = Guid.NewGuid(), PermissionName = Permissions.EditUsers.ToString(), Description = "Can edit users" },
+                new Permission { PermissionId = Guid.NewGuid(), PermissionName = Permissions.DeleteUsers.ToString(), Description = "Can delete users" },
+                new Permission { PermissionId = Guid.NewGuid(), PermissionName = Permissions.CreateUsers.ToString(), Description = "Can create users" }
+            };
+
+            modelBuilder.Entity<Permission>().HasData(permissions);
+
+            var adminRole = new Role
+            {
+                RoleId = Guid.NewGuid(),
+                RoleName = "Admin",
+                Permissions = permissions // Assign all permissions to the Admin role
+            };
+
+            modelBuilder.Entity<Role>().HasData(adminRole);
 
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -47,6 +74,7 @@ namespace DataLayer
             modelBuilder.Entity<Stock>().HasNoKey();
 
             // Other configurations can go here
+
         }
     }
 }

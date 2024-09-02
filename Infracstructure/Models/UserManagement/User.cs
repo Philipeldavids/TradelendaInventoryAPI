@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infracstructure.Models.UserManagement
 {
-    public class User
+    public class User 
     {
         [Key]
         [Required]

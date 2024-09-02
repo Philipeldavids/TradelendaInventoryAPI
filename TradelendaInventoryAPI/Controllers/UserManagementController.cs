@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Interfaces;
+using Infracstructure;
 using Infracstructure.DTOs.UserManagementDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -45,7 +46,7 @@ namespace TradelendaInventoryAPI.Controllers
 
                 // Create a new user
             [HttpPost]
-            //[Authorize(Roles = "Admin")]
+            //[Authorize/*(Roles = "Admin")*/]
             public async Task<IActionResult> CreateUser([FromBody] CreateUserRequestDTO request)
             {
                 if (!ModelState.IsValid)
@@ -113,6 +114,7 @@ namespace TradelendaInventoryAPI.Controllers
 
                 return Ok(new
                 {
+                   
                     Token = result.Token,
                     RefreshToken = result.RefreshToken
                 });

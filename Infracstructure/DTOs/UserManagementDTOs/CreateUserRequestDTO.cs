@@ -10,7 +10,7 @@ namespace Infracstructure.DTOs.UserManagementDTOs
     public class CreateUserRequestDTO
     {
         [Required, MaxLength(50)]
-        public string Username { get; set; }
+        public string Name { get; set; }
 
         [Required, EmailAddress, MaxLength(100)]
         public string Email { get; set; }
@@ -18,7 +18,14 @@ namespace Infracstructure.DTOs.UserManagementDTOs
         [Required, MinLength(6), MaxLength(100)]
         public string Password { get; set; }
 
+        [Required, MinLength(6), MaxLength(100)]
+        public string ConfirmPassword { get; set; }
+
         [Required]
-        public List<Guid> RoleIds { get; set; }
+        public bool IsAgreement { get; set; }
+
+        
+        
     }
 }
+    

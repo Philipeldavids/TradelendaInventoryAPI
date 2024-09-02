@@ -37,18 +37,20 @@ namespace BusinessLogic.Services
         {
             var user = new User
             {
-                UserName = request.Username,
+                UserName = request.Email,
                 Email = request.Email,
                 RefreshToken = _tokenService.GenerateRefreshToken()
-        };
-
-            // user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
-            user.PasswordHash = Encrypt(request.Password);
+            };
+          
+                  
+            user.PasswordHash = Encrypt(request.Password);              
+            
             var result = await _userRepository.AddUserAsync(user);
             if (!result)
             {
                 return (false, null, new[] { "User registration failed" });
             }
+            // user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
 
             return (true, user, null);
         }

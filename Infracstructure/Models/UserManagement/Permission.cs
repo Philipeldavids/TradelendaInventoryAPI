@@ -9,13 +9,15 @@ namespace Infracstructure.Models.UserManagement
 {
     public class Permission
     {
-        public Guid PermissionId { get; set; }
+        public string PermissionId { get; set; } = Guid.NewGuid().ToString();
 
         [Required, MaxLength(100)]
         public string PermissionName { get; set; }
 
         [MaxLength(200)]
         public string Description { get; set; }
+
+        public Role Roles { get; set; }
     }
 
 

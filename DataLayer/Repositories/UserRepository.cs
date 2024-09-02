@@ -18,19 +18,19 @@ namespace DataLayer.Repositories
             _context = context;
         }
 
-        public async Task<User> GetUserByIdAsync(Guid userId)
+        public async Task<User> GetUserByIdAsync(string userId)
         {
-            return await _context.Users.FindAsync(userId);
+            return _context.Users.Find(userId);
         }
 
-        public async Task<User> GetUserByUsernameAsync(string username)
+        public async Task<User> GetUserByUserNameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return _context.Users.Where(u => u.UserName == username).FirstOrDefault();
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return _context.Users.ToList();
         }
 
         public async Task<bool> AddUserAsync(User user)

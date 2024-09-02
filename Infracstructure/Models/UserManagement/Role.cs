@@ -10,7 +10,7 @@ namespace Infracstructure.Models.UserManagement
 {
     public class Role
     {
-        public Guid RoleId { get; set; }
+        public string RoleId { get; set; } = Guid.NewGuid().ToString();
 
         [Required, MaxLength(50)]
         public string RoleName { get; set; }

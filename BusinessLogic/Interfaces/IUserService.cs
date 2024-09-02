@@ -14,8 +14,8 @@ namespace BusinessLogic.Interfaces
         Task<(bool Success, string Token, string RefreshToken, IEnumerable<string> Errors)> AuthenticateAsync(string username, string password);
         Task<(bool Success, string Token, string RefreshToken, IEnumerable<string> Errors)> RefreshTokenAsync(string token, string refreshToken);
         Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User> GetUserByIdAsync(Guid id);
-        Task<(bool Success, IEnumerable<string> Errors)> UpdateUserAsync(Guid id, UpdateUserRequestDTO request);
-        Task<(bool Success, IEnumerable<string> Errors)> DeleteUserAsync(Guid id);
+        Task<User> GetUserByIdAsync(string id);
+        Task<(bool Success, IEnumerable<string> Errors)> UpdateUserAsync(string id, UpdateUserRequestDTO request);
+        Task<(bool Success, IEnumerable<string> Errors)> DeleteUserAsync(string id);
     }
 }

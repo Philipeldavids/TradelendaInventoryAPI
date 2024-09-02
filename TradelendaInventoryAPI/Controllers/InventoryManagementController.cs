@@ -85,11 +85,11 @@ namespace TradelendaInventoryAPI.Controllers
 
         [HttpGet("GetProducts")]
 
-        public ActionResult GetProducts()
+        public ActionResult GetProducts(int pageSize, int pageNumber)
         {
             try
             {
-                var res = _inventoryManagementService.GetProducts();
+                var res = _inventoryManagementService.GetProducts(pageSize, pageNumber);
                 return Ok(res);
             }
             catch (Exception ex) 
@@ -98,11 +98,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpGet("GetProductsByID")]
-        public ActionResult GetProductsById(string id)
+        public ActionResult GetProductsById(string id, int pageSize, int pageNumber)
         {
             try
             {
-                var res= _inventoryManagementService.GetProductByID(id);
+                var res= _inventoryManagementService.GetProductByID(id, pageSize, pageNumber);
                 return Ok(res);
             }
             catch(Exception ex)

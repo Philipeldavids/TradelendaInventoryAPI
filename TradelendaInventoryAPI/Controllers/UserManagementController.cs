@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TradelendaInventoryAPI.Controllers
 {
    
-        [Authorize]
+       
         [ApiController]
         //[Route("api/[controller]")]
         [Route("api/user-management/[action]")]
@@ -23,7 +23,7 @@ namespace TradelendaInventoryAPI.Controllers
 
             // Get all users
             [HttpGet]
-            [Authorize(Roles = "Admin")]
+            [Authorize]
             public async Task<IActionResult> GetUsers()
             {
                 var users = await _userService.GetAllUsersAsync();
@@ -32,8 +32,8 @@ namespace TradelendaInventoryAPI.Controllers
 
             // Get user by ID
             [HttpGet("{id}")]
-            [Authorize(Roles = "Admin,Manager")]
-            public async Task<IActionResult> GetUser(Guid id)
+            [Authorize]
+            public async Task<IActionResult> GetUser(string id)
             {
                 var user = await _userService.GetUserByIdAsync(id);
                 if (user == null)
@@ -43,9 +43,9 @@ namespace TradelendaInventoryAPI.Controllers
                 return Ok(user);
             }
 
-            // Create a new user
+                // Create a new user
             [HttpPost]
-            [Authorize(Roles = "Admin")]
+            //[Authorize(Roles = "Admin")]
             public async Task<IActionResult> CreateUser([FromBody] CreateUserRequestDTO request)
             {
                 if (!ModelState.IsValid)
@@ -64,8 +64,8 @@ namespace TradelendaInventoryAPI.Controllers
 
             // Update user details
             [HttpPut("{id}")]
-            [Authorize(Roles = "Admin")]
-            public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserRequestDTO request)
+            [Authorize]
+            public async Task<IActionResult> UpdateUser(string id, [FromBody] UpdateUserRequestDTO request)
             {
                 if (!ModelState.IsValid)
                 {
@@ -83,8 +83,8 @@ namespace TradelendaInventoryAPI.Controllers
 
             // Delete a user
             [HttpDelete("{id}")]
-            [Authorize(Roles = "Admin")]
-            public async Task<IActionResult> DeleteUser(Guid id)
+            [Authorize]
+            public async Task<IActionResult> DeleteUser(string id)
             {
                 var result = await _userService.DeleteUserAsync(id);
                 if (!result.Success)

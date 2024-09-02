@@ -35,7 +35,7 @@ namespace DataLayer.Repository
             return false;
         }
 
-        public async Task<List<Category>> GetGategoryList()
+        public async Task<IEnumerable<Category>> GetGategoryList()
         {
             var categories = _context.Categories.ToList();
 
@@ -70,14 +70,14 @@ namespace DataLayer.Repository
             }
             return false; 
         }
-        public async Task<List<Product>> GetallProducts()
+        public async Task<IEnumerable<Product>> GetallProducts()
         {
 
             var products = _context.Products.ToList();
             return products;
             
         }
-        public async Task<List<Product>> GetProductbyId(string Id)
+        public async Task<IEnumerable<Product>> GetProductbyId(string Id)
         {
             var products = _context.Products.Where(x=>x.ProductId== Id).ToList();
 

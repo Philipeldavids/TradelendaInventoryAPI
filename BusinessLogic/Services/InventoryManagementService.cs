@@ -1,4 +1,5 @@
-﻿using DataLayer.Interfaces;
+﻿using BusinessLogic.Utilities.Pagination;
+using DataLayer.Interfaces;
 using Infracstructure;
 using Infracstructure.Models;
 using System;
@@ -18,24 +19,26 @@ namespace BusinessLogic.Services
             _inventoryManagementRepository = inventoryManagementRepository;
         }
 
-        public async Task<ServiceResponse<List<Product>>> GetProducts()
+        public async Task<ServiceResponse<PaginationModel<IEnumerable<Product>>>> GetProducts(int pageSize, int pageNumber)
         {
             var res = await _inventoryManagementRepository.GetallProducts();
 
-            return new ServiceResponse<List<Product>>()
+            var result = PaginationClass.PaginationAsync(res, pageSize, pageNumber);
+            return new ServiceResponse<PaginationModel<IEnumerable<Product>>>()
             {
-                Data = res,
+                Data = result,
                 Success = true,
                 Message = "LIst of Products SUcccefull"
             };
         }
 
-        public async Task<ServiceResponse<List<Product>>> GetProductByID(String Id)
+        public async Task<ServiceResponse<PaginationModel<IEnumerable<Product>>>> GetProductByID(string Id, int pageSize, int pageNumber)
         {
             var res = await _inventoryManagementRepository.GetProductbyId(Id);
-            return new ServiceResponse<List<Product>>()
+            var result = PaginationClass.PaginationAsync(res, pageSize, pageNumber);
+            return new ServiceResponse<PaginationModel<IEnumerable<Product>>>()
             {
-                Data = res,
+                Data = result,
                 Success = true,
                 Message = "List of specific products successful"
             };

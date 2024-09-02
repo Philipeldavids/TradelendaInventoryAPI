@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,10 +10,13 @@ namespace Infracstructure.Models.UserManagement
 {
     public class User
     {
-        public Guid UserId { get; set; }
+        [Key]
+        [Required]
+        
+        public string UserId { get; set; } = Guid.NewGuid().ToString();
 
         [Required, MaxLength(50)]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         [Required, EmailAddress, MaxLength(100)]
         public string Email { get; set; }

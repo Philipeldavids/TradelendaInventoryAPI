@@ -5,6 +5,7 @@ using DataLayer.Interfaces;
 using DataLayer.Services;
 using Infracstructure.DTOs.UserManagementDTOs;
 using Infracstructure.Models.UserManagement;
+using Microsoft.AspNetCore.DataProtection.XmlEncryption;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -36,12 +37,13 @@ namespace BusinessLogic.Services
         {
             var user = new User
             {
-                Username = request.Username,
-                Email = request.Email
-            };
+                UserName = request.Username,
+                Email = request.Email,
+                RefreshToken = _tokenService.GenerateRefreshToken()
+        };
 
-            user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
-
+            // user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
+            user.PasswordHash = Encrypt(request.Password);
             var result = await _userRepository.AddUserAsync(user);
             if (!result)
             {
@@ -53,8 +55,9 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, string Token, string RefreshToken, IEnumerable<string> Errors)> AuthenticateAsync(string username, string password)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-            if (user == null || !_passwordHasher.VerifyPassword(user, password))
+            var user = await _userRepository.GetUserByUserNameAsync(username);
+            var passwordunhash = Dencrypt(user.PasswordHash);
+            if (user == null || passwordunhash != password)
             {
                 return (false, null, null, new[] { "Invalid username or password" });
             }
@@ -88,7 +91,7 @@ namespace BusinessLogic.Services
 
             // Get the user from the principal
             var username = principal.Identity.Name;
-            var user = await _userRepository.GetUserByUsernameAsync(username);
+            var user = await _userRepository.GetUserByUserNameAsync(username);
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {
                 return (false, null, null, new[] { "Invalid or expired refresh token." });
@@ -120,12 +123,12 @@ namespace BusinessLogic.Services
             return await _userRepository.GetAllUsersAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(Guid id)
+        public async Task<User> GetUserByIdAsync(string id)
         {
             return await _userRepository.GetUserByIdAsync(id);
         }
 
-        public async Task<(bool Success, IEnumerable<string> Errors)> UpdateUserAsync(Guid id, UpdateUserRequestDTO request)
+        public async Task<(bool Success, IEnumerable<string> Errors)> UpdateUserAsync(string id, UpdateUserRequestDTO request)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
@@ -134,12 +137,15 @@ namespace BusinessLogic.Services
             }
 
             // Update user properties here
+            user.UserName = request.Username;
+            user.PasswordHash = Encrypt(request.Password);
+            user.Email = request.Email; 
 
             var result = await _userRepository.UpdateUserAsync(user);
             return result ? (true, null) : (false, new[] { "Update failed" });
         }
 
-        public async Task<(bool Success, IEnumerable<string> Errors)> DeleteUserAsync(Guid id)
+        public async Task<(bool Success, IEnumerable<string> Errors)> DeleteUserAsync(string id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
@@ -151,6 +157,27 @@ namespace BusinessLogic.Services
             return result ? (true, null) : (false, new[] { "Delete failed" });
         }
 
+        //========================Two way encryption=============================
+        public static string Encrypt(string datastring)
+        {
+            string encryptData = string.Empty;
+            byte[] encode = new byte[datastring.Length];
+            encode = Encoding.UTF8.GetBytes(datastring);
+            encryptData = Convert.ToBase64String(encode);
+            return encryptData;
+        }
 
+        public static string Dencrypt(string encryptDatastring)
+        {
+            string DataDencrypt = string.Empty;
+            UTF8Encoding encodepwd = new UTF8Encoding();
+            Decoder decoder = encodepwd.GetDecoder();
+            byte[] todec_byte = Convert.FromBase64String(encryptDatastring);
+            int charcount = decoder.GetCharCount(todec_byte, 0, todec_byte.Length);
+            char[] decoded_char = new char[charcount];
+            decoder.GetChars(todec_byte, 0, todec_byte.Length, decoded_char, 0);
+            DataDencrypt = new string(decoded_char);
+            return DataDencrypt;
+        }
     }
 }

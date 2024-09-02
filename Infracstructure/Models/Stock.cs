@@ -8,7 +8,7 @@ namespace Infracstructure.Models
 {
     public class Stock
     {
-        public string StockId { get; set; }
+        public string StockId { get; set; } = Guid.NewGuid().ToString();
         public string WarehouseID { get; set; }
         public List<Product> Products { get; set; }
 

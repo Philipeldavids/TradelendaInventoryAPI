@@ -12,8 +12,10 @@ namespace Infracstructure.Models
         [Key] 
         public string CustomerId { get; set; } = Guid.NewGuid().ToString();
         public string FullName { get; set; }
+
+        public int Code { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
+        public long PhoneNumber { get; set; }
         public string ShippingAddress { get; set; }
 
         public List<PurchaseOrder> PurchaseOrders { get; set;}

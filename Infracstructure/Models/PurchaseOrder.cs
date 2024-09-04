@@ -28,9 +28,11 @@ namespace Infracstructure.Models
 
     public class OrderItem
     {
-        public Guid OrderItemId { get; set; }
-        public Guid OrderId { get; set; }
-        public Guid ProductId { get; set; }
+        [Key]
+        public string OrderItemId { get; set; } = Guid.NewGuid().ToString();
+        public string PurchaseOrderId { get; set; } = Guid.NewGuid().ToString();
+
+        
         public int Quantity { get; set; }
         public decimal PricePerUnit { get; set; }
 

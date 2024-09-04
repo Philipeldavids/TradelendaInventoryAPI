@@ -18,5 +18,7 @@ namespace Infracstructure.Models
 
         public string Quantity { get; set; }
 
+        public Warehouse Warehouse { get; set; }
+
     }
 }

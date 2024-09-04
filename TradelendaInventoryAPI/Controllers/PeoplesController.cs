@@ -7,6 +7,7 @@ namespace TradelendaInventoryAPI.Controllers
     [ApiController]
     public class PeoplesController : ControllerBase
     {
+
         public PeoplesController()
         {
             

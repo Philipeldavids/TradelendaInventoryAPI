@@ -14,7 +14,6 @@ namespace Infracstructure.Models
         public string ContactPhone { get; set; }
 
         public Supplier ContactPerson { get; set; }  
-        public List<Product> Products { get; set; }
         public List<Stock> Stocks { get; set; }
 
         public int Quantity { get; set; }

@@ -5,7 +5,7 @@ namespace DataLayer.Interfaces
     public interface IUserRepository
     {
         Task<User> GetUserByIdAsync(string userId);
-        Task<User> GetUserByUserNameAsync(string username);
+        Task<User> GetUserByUsernameAsync(string username);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<bool> AddUserAsync(User user);
         Task<bool> UpdateUserAsync(User user);

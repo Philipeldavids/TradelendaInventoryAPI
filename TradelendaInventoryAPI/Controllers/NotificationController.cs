@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TradelendaInventoryAPI.Controllers
 {
-    
-
     [ApiController]
     [Route("api/[controller]")]
     public class NotificationController : ControllerBase
@@ -46,5 +44,4 @@ namespace TradelendaInventoryAPI.Controllers
             return Ok("Notification sent successfully");
         }
     }
-
 }

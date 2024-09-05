@@ -69,10 +69,10 @@ namespace DataLayer.Repository
 
             return new ServiceResponse<bool>
             {
-                Data = true, 
+                Data = true,
                 Success = true,
-                Message="Store deleted successfully"
-            }
+                Message = "Store deleted successfully"
+            };
         }
     }
 }

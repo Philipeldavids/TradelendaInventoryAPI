@@ -58,6 +58,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<PasswordHasher>();
+builder.Services.AddScoped<INotificationService,NotificationService>();
+builder.Services.AddScoped<IEmailService,EmailService>();
+builder.Services.AddSignalR();
 
 
 builder.Services.AddEndpointsApiExplorer();

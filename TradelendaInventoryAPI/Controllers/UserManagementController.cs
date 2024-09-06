@@ -221,7 +221,7 @@ namespace TradelendaInventoryAPI.Controllers
                 return Unauthorized(result.Errors);
             }
 
-            return Ok(new { Token = result.Token, RefreshToken = result.RefreshToken });
+            return Ok(new { User= result.user, Token = result.Token, RefreshToken = result.RefreshToken });
         }
 
         [HttpPost("refresh-token")]

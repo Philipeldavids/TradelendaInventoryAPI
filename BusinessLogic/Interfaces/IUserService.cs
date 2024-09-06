@@ -22,7 +22,7 @@ namespace BusinessLogic.Interfaces
     public interface IUserService
     {
         Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterUserAsync(CreateUserRequestDTO request);
-        Task<(bool Success, string Token, string RefreshToken, IEnumerable<string> Errors)> AuthenticateAsync(string username, string password);
+        Task<(bool Success, string Token, string RefreshToken, User user, IEnumerable<string> Errors)> AuthenticateAsync(string username, string password);
         Task<(bool Success, string Token, string RefreshToken, IEnumerable<string> Errors)> RefreshTokenAsync(string token, string refreshToken);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(string id);

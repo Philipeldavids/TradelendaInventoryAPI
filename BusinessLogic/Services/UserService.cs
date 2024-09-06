@@ -240,7 +240,7 @@ namespace BusinessLogic.Services
             return (true, user, null);
         }
 
-        public async Task<(bool Success, string Token, string RefreshToken, IEnumerable<string> Errors)> AuthenticateAsync(string username, string password)
+        public async Task<(bool Success, string Token, string RefreshToken, User user, IEnumerable<string> Errors)> AuthenticateAsync(string username, string password)
         {
 
             //var user = await _userRepository.GetUserByUserNameAsync(username);
@@ -251,7 +251,7 @@ namespace BusinessLogic.Services
             if (user == null || !_passwordHasher.VerifyPassword(user, password))
 
             {
-                return (false, null, null, new[] { "Invalid username or password" });
+                return (false, null, null, null, new[] { "Invalid username or password" });
             }
 
             var token = _tokenService.GenerateJwtToken(user);
@@ -261,7 +261,7 @@ namespace BusinessLogic.Services
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(int.Parse(_configuration["Jwt:RefreshTokenLifetimeDays"]));
             await _userRepository.UpdateUserAsync(user);
 
-            return (true, token, refreshToken, null);
+            return (true, token, refreshToken, user, null);
         }
 
         public async Task<(bool Success, string Token, string RefreshToken, IEnumerable<string> Errors)> RefreshTokenAsync(string token, string refreshToken)

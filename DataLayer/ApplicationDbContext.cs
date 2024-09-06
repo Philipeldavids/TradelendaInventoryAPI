@@ -60,21 +60,18 @@ namespace DataLayer
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category);// Each Product has one Category
                                          // Each Category can have many Products
-            modelBuilder.Entity<OrderItem>().
-                HasOne(p=>p.Order)
-                .WithMany(c=>c.Items)
-                .HasForeignKey(p=>p.PurchaseOrderId);
+            modelBuilder.Entity<OrderItem>().HasKey(p => p.OrderItemId);
+                
 
             modelBuilder.Entity<OrderItem>().HasKey(p => p.OrderItemId);
 
-            modelBuilder.Entity<PurchaseOrder>()
-                .HasOne(p => p.Customer)
-                .WithMany(c => c.PurchaseOrders)
-                .HasForeignKey(p => p.CustomerId);
-            
-            modelBuilder.Entity<Stock>().HasOne(p=>p.Warehouse)
-                .WithMany(p=>p.Stocks)
-                .HasForeignKey(c=>c.WarehouseID);
+            modelBuilder.Entity<Customer>().HasOne(p => p.PurchaseOrders);
+            modelBuilder.Entity<PurchaseOrder>().HasKey(p=>p.OrderId);                
+
+          
+            modelBuilder.Entity<Stock>().HasKey(p=> p.StockId);
+            modelBuilder.Entity<Warehouse>().HasOne(p => p.Stock);
+                
 
             // Other configurations can go here
         }

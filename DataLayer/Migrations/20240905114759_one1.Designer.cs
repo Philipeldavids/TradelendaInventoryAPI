@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240905114759_one1")]
+    partial class one1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,8 +182,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -384,11 +386,13 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.OrderItem", b =>
                 {
-                    b.HasOne("Infracstructure.Models.PurchaseOrder", null)
+                    b.HasOne("Infracstructure.Models.PurchaseOrder", "Order")
                         .WithMany("Items")
                         .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Product", b =>
@@ -408,11 +412,13 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseOrder", b =>
                 {
-                    b.HasOne("Infracstructure.Models.Customer", null)
-                        .WithOne("PurchaseOrders")
-                        .HasForeignKey("Infracstructure.Models.PurchaseOrder", "CustomerId")
+                    b.HasOne("Infracstructure.Models.Customer", "Customer")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Stock", b =>
@@ -455,8 +461,7 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.Customer", b =>
                 {
-                    b.Navigation("PurchaseOrders")
-                        .IsRequired();
+                    b.Navigation("PurchaseOrders");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseOrder", b =>

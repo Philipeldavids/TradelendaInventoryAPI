@@ -12,14 +12,12 @@ namespace Infracstructure.Models
     {
         [Key]
         public string OrderId { get; set; } = Guid.NewGuid().ToString();
-        public string CustomerId { get; set; } = Guid.NewGuid().ToString();
+        public string CustomerId { get; set; } 
         public List<OrderItem> Items { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime OrderPlacedAt { get; set; }
         public DateTime? OrderFulfilledAt { get; set; }
-        public decimal TotalAmount { get; set; }
-
-        public Customer Customer {  get; set; }  
+        public decimal TotalAmount { get; set; }       
 
 
     }
@@ -30,14 +28,14 @@ namespace Infracstructure.Models
     {
         [Key]
         public string OrderItemId { get; set; } = Guid.NewGuid().ToString();
-        public string PurchaseOrderId { get; set; } = Guid.NewGuid().ToString();
+        public string PurchaseOrderId { get; set; }
 
         
         public int Quantity { get; set; }
         public decimal PricePerUnit { get; set; }
 
         // Navigation property
-        public PurchaseOrder Order { get; set; }
+        
     }
 
 }

@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240905110038_add1")]
+    partial class add1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,9 +143,6 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StockId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Unit")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -150,8 +150,6 @@ namespace DataLayer.Migrations
                     b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("StockId");
 
                     b.ToTable("Products");
                 });
@@ -179,17 +177,13 @@ namespace DataLayer.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Stock", b =>
                 {
-                    b.Property<string>("StockId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
@@ -197,18 +191,22 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Quantity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("StockId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WarehouseID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StockId");
-
-                    b.HasIndex("WarehouseID")
-                        .IsUnique();
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Stocks");
                 });
@@ -384,11 +382,13 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.OrderItem", b =>
                 {
-                    b.HasOne("Infracstructure.Models.PurchaseOrder", null)
+                    b.HasOne("Infracstructure.Models.PurchaseOrder", "Order")
                         .WithMany("Items")
                         .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Product", b =>
@@ -399,29 +399,29 @@ namespace DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Infracstructure.Models.Stock", null)
-                        .WithMany("Products")
-                        .HasForeignKey("StockId");
-
                     b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseOrder", b =>
                 {
-                    b.HasOne("Infracstructure.Models.Customer", null)
-                        .WithOne("PurchaseOrders")
-                        .HasForeignKey("Infracstructure.Models.PurchaseOrder", "CustomerId")
+                    b.HasOne("Infracstructure.Models.Customer", "Customer")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Stock", b =>
                 {
-                    b.HasOne("Infracstructure.Models.Warehouse", null)
-                        .WithOne("Stock")
-                        .HasForeignKey("Infracstructure.Models.Stock", "WarehouseID")
+                    b.HasOne("Infracstructure.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.UserManagement.Permission", b =>
@@ -455,18 +455,12 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.Customer", b =>
                 {
-                    b.Navigation("PurchaseOrders")
-                        .IsRequired();
+                    b.Navigation("PurchaseOrders");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseOrder", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.Stock", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.UserManagement.Role", b =>
@@ -477,12 +471,6 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("Infracstructure.Models.UserManagement.User", b =>
                 {
                     b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.Warehouse", b =>
-                {
-                    b.Navigation("Stock")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

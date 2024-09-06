@@ -18,7 +18,7 @@ namespace Infracstructure.Models
         public long PhoneNumber { get; set; }
         public string ShippingAddress { get; set; }
 
-        public List<PurchaseOrder> PurchaseOrders { get; set;}
+        public PurchaseOrder PurchaseOrders { get; set;}
     }
 
 }

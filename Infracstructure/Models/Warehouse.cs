@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,9 @@ namespace Infracstructure.Models
        
         public string ContactPhone { get; set; }
 
-        public Supplier ContactPerson { get; set; }  
-        public List<Stock> Stocks { get; set; }
+        public Supplier ContactPerson { get; set; }
+        
+        public Stock Stock { get; set; }
 
         public int Quantity { get; set; }
         public DateTime CreatedOn { get; set; }

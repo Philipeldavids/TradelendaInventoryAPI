@@ -3,6 +3,7 @@ using Infracstructure;
 using Infracstructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,35 +45,293 @@ namespace DataLayer.Repository
         {
             var stor = _context.Stores.Where(x=>x.StoreId == Id).FirstOrDefault();
 
-            stor.StoreName = store.StoreName;
-            stor.UserName = store.UserName;
-            stor.PhoneNumber = store.PhoneNumber;
-            stor.Email = store.Email;
-            stor.Status = store.Status;
+            if(stor != null)
+            {
+                stor.StoreName = store.StoreName;
+                stor.UserName = store.UserName;
+                stor.PhoneNumber = store.PhoneNumber;
+                stor.Email = store.Email;
+                stor.Status = store.Status;
 
-            _context.Stores.Update(stor);
+                _context.Stores.Update(stor);
+                _context.SaveChanges();
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Store Updated successfully"
+                };
+            }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Store Updated failed"
+            };
+        }
+
+        public async Task<ServiceResponse<bool>> DeleteStores(string ID)
+        {
+            var stor = _context.Stores.Where(x => x.StoreId == ID).FirstOrDefault();
+
+            if(stor != null )
+            {
+                _context.Stores.Remove(stor);
+                _context.SaveChanges();
+
+                return new ServiceResponse<bool>
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Store deleted successfully"
+                };
+            }
+            return new ServiceResponse<bool>
+            {
+                Data = false,
+                Success = false,
+                Message = "Store deletion failed"
+            };
+
+        }
+
+        public async Task<ServiceResponse<List<Customer>>> GetCustomers()
+        {
+           var res =  _context.Customers.ToList();
+            return new ServiceResponse<List<Customer>>()
+            {
+                Data = res,
+                Success = true,
+                Message = "Customers list retrieved successfully"
+            };
+        }
+
+        public async Task<ServiceResponse<bool>> AddCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
             _context.SaveChanges();
             return new ServiceResponse<bool>()
             {
                 Data = true,
                 Success = true,
-                Message = "Store Updated successfully"
+                Message = "Customer added successfully"
+            };
+
+        }
+
+        public async Task<ServiceResponse<bool>> EditCustomer(Customer customer, string Id)
+        {
+            var customr = _context.Customers.Where(x => x.CustomerId == Id).FirstOrDefault();
+
+            if(customr != null)
+            {
+                customr.PhoneNumber = customer.PhoneNumber;
+                customr.FullName = customer.FullName;
+                customr.ShippingAddress = customer.ShippingAddress;
+                customr.Code = customer.Code;
+                customr.PurchaseOrders = customer.PurchaseOrders;
+
+                _context.Customers.Update(customr);
+                _context.SaveChanges();
+
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Customer updated successfully"
+                };
+            }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Customer updated failed"
+            };
+
+        }
+
+        public async Task<ServiceResponse<bool>> DeleteCustomer(string Id)
+        {
+            var customr = _context.Customers.Where(x => x.CustomerId == Id).FirstOrDefault();
+
+            if (customr != null)
+            {
+                _context.Customers.Remove(customr);
+                _context.SaveChanges();
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Customer deleted successfully"
+                };
+            }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Customer deletion failed"
             };
         }
 
-        public async Task<ServiceResponse<bool>> Delete(string ID)
+        public async Task<ServiceResponse<List<Supplier>>> GetSupplier()
         {
-            var stor = _context.Stores.Where(x => x.StoreId == ID).FirstOrDefault();
-
-            _context.Stores.Remove(stor);
-            _context.SaveChanges();
-
-            return new ServiceResponse<bool>
+            var res = _context.Suppliers.ToList();
+            return new ServiceResponse<List<Supplier>>()
             {
-                Data = true, 
+                Data = res,
                 Success = true,
-                Message="Store deleted successfully"
+                Message = "Supplier list retrieved successfully"
+            };
+        }
+
+        public async Task<ServiceResponse<bool>> AddSupplier(Supplier supplier)
+        {
+            _context.Suppliers.Add(supplier);
+            _context.SaveChanges();
+            return new ServiceResponse<bool>()
+            {
+                Data = true,
+                Success = true,
+                Message = "Supplier added successfully"
+            };
+
+        }
+
+        public async Task<ServiceResponse<bool>> EditSupplier(Supplier supplier, string Id)
+        {
+            var supplir = _context.Suppliers.Where(x => x.SupplierID == Id).FirstOrDefault();
+
+            if (supplir != null)
+            {
+                supplir.PhoneNumber = supplier.PhoneNumber;
+                supplir.Email = supplier.Email;
+                supplir.Name = supplier.Name;
+                supplir.Country = supplier.Country;
+                supplir.Code = supplier.Code;         
+      
+                _context.Suppliers.Update(supplir);
+                _context.SaveChanges();
+
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Supplier updated successfully"
+                };
             }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Supplier updated failed"
+            };
+
+        }
+
+        public async Task<ServiceResponse<bool>> DeleteSupplier(string Id)
+        {
+            var supplr = _context.Suppliers.Where(x => x.SupplierID == Id).FirstOrDefault();
+
+            if (supplr != null)
+            {
+                _context.Suppliers.Remove(supplr);
+                _context.SaveChanges();
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Supplier deleted successfully"
+                };
+            }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Supplier deletion failed"
+            };
+        }
+
+        public async Task<ServiceResponse<List<Warehouse>>> GetWarehouse()
+        {
+            var res = await _context.Warehouses
+                .Include(propa => propa.Stock).ToListAsync();
+            return new ServiceResponse<List<Warehouse>>()
+            {
+                Data = res,
+                Success = true,
+                Message = "Warehouse list retrieved successfully"
+            };
+        }
+
+        public async Task<ServiceResponse<bool>> AddWarehouse(Warehouse warehouse)
+        {
+            _context.Warehouses.Add(warehouse);
+            _context.SaveChanges();
+            return new ServiceResponse<bool>()
+            {
+                Data = true,
+                Success = true,
+                Message = "Warehouse added successfully"
+            };
+
+        }
+
+        public async Task<ServiceResponse<bool>> EditWarehouse(Warehouse warehouse, string Id)
+        {
+            var warehous = _context.Warehouses.Where(x => x.WarehouseId == Id)
+                .FirstOrDefault();
+
+            if (warehous != null)
+            {
+                warehous.WarehouseName = warehouse.WarehouseName;
+                warehous.ContactPhone = warehouse.ContactPhone;
+                warehous.ContactPerson = warehouse.ContactPerson;
+                warehous.CreatedOn = warehouse.CreatedOn;
+                warehous.Quantity = warehouse.Quantity;
+                warehous.Stock = warehouse.Stock;
+                warehous.Status = warehouse.Status;
+                
+
+                _context.Warehouses.Update(warehous);
+                _context.SaveChanges();
+
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Supplier updated successfully"
+                };
+            }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Supplier updated failed"
+            };
+
+        }
+
+        public async Task<ServiceResponse<bool>> DeleteWarehouse(string Id)
+        {
+            var warehous = _context.Warehouses.Where(x => x.WarehouseId == Id).FirstOrDefault();
+
+            if (warehous != null)
+            {
+                _context.Warehouses.Remove(warehous);
+                _context.SaveChanges();
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Supplier deleted successfully"
+                };
+            }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Supplier deletion failed"
+            };
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,8 @@ namespace Infracstructure.Models
         
         public string Person { get; set; }
 
-        public string Quantity { get; set; }
-
-        public Warehouse Warehouse { get; set; }
+        public string Quantity { get; set; }        
+       
 
     }
 }

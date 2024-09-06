@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infracstructure.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace Infracstructure.DTOs.UserManagementDTOs
 
         [Required]
         public bool IsAgreement { get; set; }
+        
+        public Roles Role { get; set; }
 
         
         

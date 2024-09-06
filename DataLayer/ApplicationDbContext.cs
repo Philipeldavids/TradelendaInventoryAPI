@@ -20,37 +20,29 @@ namespace DataLayer
         }
 
 
-        public DbSet<Infracstructure.Models.UserManagement.User> Users { get; set; }
+        
 
-        public DbSet<Permission> Permissons { get; set; }
-
-        public DbSet<Role> Roles { get; set; }
+       // public DbSet<Role> Roles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            var permissions = new List<Permission>
-            {
-                new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.ViewUsers.ToString(), Description = "Can view users" },
-                new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.EditUsers.ToString(), Description = "Can edit users" },
-                new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.DeleteUsers.ToString(), Description = "Can delete users" },
-                new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.CreateUsers.ToString(), Description = "Can create users" }
-            };
+            //var permissions = new List<Permission>
+            //{
+            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.ViewUsers.ToString(), Description = "Can view users" },
+            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.EditUsers.ToString(), Description = "Can edit users" },
+            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.DeleteUsers.ToString(), Description = "Can delete users" },
+            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.CreateUsers.ToString(), Description = "Can create users" }
+            //};
 
            
             
-            modelBuilder.Entity<Permission>().HasOne(p=>p.Roles)
-                .WithMany(p=>p.Permissions)
-                .HasForeignKey(p=>p.PermissionId);
+            //modelBuilder.Entity<Permission>().HasOne(p=>p.Roles)
+            //    .WithMany(p=>p.Permissions)
+            //    .HasForeignKey(p=>p.PermissionId);
 
-            //var adminRole = new Role
-            //{
-            //    RoleId = Guid.NewGuid(),
-            //    RoleName = "Admin",
-            //    Permissions = permissions // Assign all permissions to the Admin role
-            //};
 
-            modelBuilder.Entity<Role>().HasKey(p => p.RoleId);
+            //modelBuilder.Entity<Role>().HasKey(p => p.RoleId);
 
 
             // Define composite primary key using HasKey
@@ -76,6 +68,8 @@ namespace DataLayer
             // Other configurations can go here
         }
         //public DbSet<AppUser> Users { get; set; }
+
+        public DbSet<User> Users { get; set; }       
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Stock> Stocks { get; set; }

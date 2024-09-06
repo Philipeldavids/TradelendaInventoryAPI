@@ -241,8 +241,14 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, string Token, string RefreshToken, IEnumerable<string> Errors)> AuthenticateAsync(string username, string password)
         {
+
+            //var user = await _userRepository.GetUserByUserNameAsync(username);
+            
+            //if (user == null || Dencrypt(user.PasswordHash) != password)
+
             var user = await _userRepository.GetUserByUsernameAsync(username);
             if (user == null || !_passwordHasher.VerifyPassword(user, password))
+
             {
                 return (false, null, null, new[] { "Invalid username or password" });
             }

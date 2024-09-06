@@ -79,9 +79,119 @@ namespace DataLayer.Repository
                 _context.Stores.Remove(stor);
                 _context.SaveChanges();
 
+                return new ServiceResponse<bool>
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Store deleted successfully"
+                };
+            }
             return new ServiceResponse<bool>
             {
-                Data = true, 
+                Data = false,
+                Success = false,
+                Message = "Store deletion failed"
+            };
+
+        }
+
+        public async Task<ServiceResponse<List<Customer>>> GetCustomers()
+        {
+           var res =  _context.Customers.ToList();
+            return new ServiceResponse<List<Customer>>()
+            {
+                Data = res,
+                Success = true,
+                Message = "Customers list retrieved successfully"
+            };
+        }
+
+        public async Task<ServiceResponse<bool>> AddCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+            return new ServiceResponse<bool>()
+            {
+                Data = true,
+                Success = true,
+                Message = "Customer added successfully"
+            };
+
+        }
+
+        public async Task<ServiceResponse<bool>> EditCustomer(Customer customer, string Id)
+        {
+            var customr = _context.Customers.Where(x => x.CustomerId == Id).FirstOrDefault();
+
+            if(customr != null)
+            {
+                customr.PhoneNumber = customer.PhoneNumber;
+                customr.FullName = customer.FullName;
+                customr.ShippingAddress = customer.ShippingAddress;
+                customr.Code = customer.Code;
+                customr.PurchaseOrders = customer.PurchaseOrders;
+
+                _context.Customers.Update(customr);
+                _context.SaveChanges();
+
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Customer updated successfully"
+                };
+            }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Customer updated failed"
+            };
+
+        }
+
+        public async Task<ServiceResponse<bool>> DeleteCustomer(string Id)
+        {
+            var customr = _context.Customers.Where(x => x.CustomerId == Id).FirstOrDefault();
+
+            if (customr != null)
+            {
+                _context.Customers.Remove(customr);
+                _context.SaveChanges();
+                return new ServiceResponse<bool>()
+                {
+                    Data = true,
+                    Success = true,
+                    Message = "Customer deleted successfully"
+                };
+            }
+            return new ServiceResponse<bool>()
+            {
+                Data = false,
+                Success = false,
+                Message = "Customer deletion failed"
+            };
+        }
+
+        public async Task<ServiceResponse<List<Supplier>>> GetSupplier()
+        {
+            var res = _context.Suppliers.ToList();
+            return new ServiceResponse<List<Supplier>>()
+            {
+
+                Data = res,
+                Success = true,
+                Message = "Supplier list retrieved successfully"
+            };
+        }
+
+        public async Task<ServiceResponse<bool>> AddSupplier(Supplier supplier)
+        {
+            _context.Suppliers.Add(supplier);
+            _context.SaveChanges();
+            return new ServiceResponse<bool>()
+            {
+                Data = true,
                 Success = true,
                 Message = "Supplier added successfully"
             };
@@ -222,6 +332,7 @@ namespace DataLayer.Repository
                 Data = false,
                 Success = false,
                 Message = "Supplier deletion failed"
+
             };
         }
     }

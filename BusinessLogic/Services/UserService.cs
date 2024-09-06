@@ -225,7 +225,8 @@ namespace BusinessLogic.Services
             {
                 Username = request.Email,
                 Email = request.Email,
-                Role = request.Role
+                Role = request.Role,
+                RefreshToken = _tokenService.GenerateRefreshToken()
             };
 
             user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);

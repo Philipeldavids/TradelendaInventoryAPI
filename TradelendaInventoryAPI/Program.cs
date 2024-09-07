@@ -60,6 +60,9 @@ builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<PasswordHasher>();
 builder.Services.AddScoped<INotificationService,NotificationService>();
 builder.Services.AddScoped<IEmailService,EmailService>();
+builder.Services.AddScoped<ISalesService, SalesService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ISalesReturnService, SalesReturnService>();
 builder.Services.AddSignalR();
 
 

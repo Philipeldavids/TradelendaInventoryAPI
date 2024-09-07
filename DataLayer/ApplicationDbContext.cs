@@ -83,10 +83,12 @@ namespace DataLayer
         public DbSet<PurchaseOrder> Orders { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Store> Stores { get; set; }
-
         public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<SalesReturn> SalesReturns { get; set; }
 
 
-        
+
     }
 }

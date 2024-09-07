@@ -81,6 +81,21 @@ namespace BusinessLogic.Services
             string notificationMessage = $"A new purchase (Order Id: {purchase.OrderId}) has been made!";
             await _hubContext.Clients.All.SendAsync("ReceiveNotification", notificationMessage);
         }
+
+        public async Task SendNotificationAsync<T>(T entity, string recipientEmail, string subject, Func<T, string> messageBuilder)
+        {
+          
+            string message = messageBuilder(entity);             
+            var mailRequestDto = new MailRequestDto
+            {
+                ToEmail = recipientEmail,
+                Subject = subject,
+                Message = message
+            };
+            await _emailService.SendEmailAsync(mailRequestDto);          
+            await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
+        }
+
     }
 
 }

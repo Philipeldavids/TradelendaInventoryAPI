@@ -43,5 +43,60 @@ namespace TradelendaInventoryAPI.Controllers
             await _notificationService.AlertNewPurchaseAsync(request.PurchaseOrder, request.RecipientEmail);
             return Ok("Notification sent successfully");
         }
+
+
+
+
+        //for the generic method
+
+
+        [HttpPost("new-product-added2")]
+        public async Task<IActionResult> AlertNewProductAddedAsync2([FromBody] NewProductNotificationRequest request)
+        {
+            await _notificationService.SendNotificationAsync(
+                request.Product,
+                request.RecipientEmail,
+                "New product added",
+                product => $"Product name: {product.ProductName}"
+            );
+            return Ok("Product notification sent successfully");
+        }
+
+        [HttpPost("new-stock-added2")]
+        public async Task<IActionResult> AlertNewStockAddedAsync2([FromBody] NewStockNotificationRequest request)
+        {
+            await _notificationService.SendNotificationAsync(
+                request.Stock,
+                request.RecipientEmail,
+                "New stock added",
+                stock => $"Product name: {stock.Products}, Quantity: {stock.Quantity}"
+            );
+            return Ok("Stock notification sent successfully");
+        }
+
+        [HttpPost("new-store-created2")]
+        public async Task<IActionResult> AlertNewStoreCreatedAsync2([FromBody] NewStoreNotificationRequest request)
+        {
+            await _notificationService.SendNotificationAsync(
+                request.Store,
+                request.RecipientEmail,
+                "New store created",
+                store => $"Store name: {store.StoreName}"
+            );
+            return Ok("Store notification sent successfully");
+        }
+
+        [HttpPost("new-purchase-added2")]
+        public async Task<IActionResult> AlertNewPurchaseAddedAsync([FromBody] NewPurchaseNotificationRequest request)
+        {
+            await _notificationService.SendNotificationAsync(
+                request.PurchaseOrder,
+                request.RecipientEmail,
+                "New purchase",
+                purchase => $"Product name: {purchase.Items}, Order Id: {purchase.OrderId}"
+            );
+            return Ok("Purchase notification sent successfully");
+        }
+
     }
 }

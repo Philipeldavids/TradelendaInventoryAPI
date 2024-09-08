@@ -21,11 +21,11 @@ namespace TradelendaInventoryAPI.Controllers
 
         [HttpPost("AddCategory")]
 
-        public ActionResult AddCategory(CategoryDTO categoryDTO)
+        public async Task<ActionResult> AddCategory(CategoryDTO categoryDTO)
         {
             try
             {
-                var res = _inventoryManagementRepository.AddCategory(categoryDTO);
+                var res = await _inventoryManagementRepository.AddCategory(categoryDTO);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -36,11 +36,11 @@ namespace TradelendaInventoryAPI.Controllers
 
         [HttpPut("EditCategory")]
         
-        public ActionResult EditCategory(CategoryDTO categoryDTO)
+        public async Task<ActionResult> EditCategory(CategoryDTO categoryDTO)
         {
             try
             {
-                var res = _inventoryManagementRepository.EditCategory(categoryDTO);
+                var res = await _inventoryManagementRepository.EditCategory(categoryDTO);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -48,14 +48,28 @@ namespace TradelendaInventoryAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("GEtCategoryByID/{Id}")]
 
-        [HttpDelete("DeleteCategory")]
-
-        public ActionResult DeleteCategory(string id)
+        public async Task<ActionResult> GetCategoryById(string Id)
         {
             try
             {
-                var res = _inventoryManagementRepository.DeleteCategory(id);
+                var res = await _inventoryManagementRepository.GetCategoryById(Id);
+                return Ok(res);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("DeleteCategory")]
+
+        public async Task<ActionResult> DeleteCategory(string id)
+        {
+            try
+            {
+                var res = await _inventoryManagementRepository.DeleteCategory(id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -67,11 +81,11 @@ namespace TradelendaInventoryAPI.Controllers
 
         [HttpGet("Getcategeory")]
 
-        public ActionResult GetCategory()
+        public async Task<ActionResult> GetCategory()
         {
             try
             {
-                var res = _inventoryManagementRepository.GetGategoryList();
+                var res = await _inventoryManagementRepository.GetGategoryList();
                 return Ok(res);
             }
             catch (Exception ex)
@@ -85,11 +99,11 @@ namespace TradelendaInventoryAPI.Controllers
 
         [HttpGet("GetProducts")]
 
-        public ActionResult GetProducts(int pageSize, int pageNumber)
+        public async Task<ActionResult> GetProducts(int pageSize, int pageNumber)
         {
             try
             {
-                var res = _inventoryManagementService.GetProducts(pageSize, pageNumber);
+                var res = await _inventoryManagementService.GetProducts(pageSize, pageNumber);
                 return Ok(res);
             }
             catch (Exception ex) 
@@ -98,11 +112,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpGet("GetProductsByID")]
-        public ActionResult GetProductsById(string id, int pageSize, int pageNumber)
+        public async Task<ActionResult> GetProductsById(string id, int pageSize, int pageNumber)
         {
             try
             {
-                var res= _inventoryManagementService.GetProductByID(id, pageSize, pageNumber);
+                var res= await _inventoryManagementService.GetProductByID(id, pageSize, pageNumber);
                 return Ok(res);
             }
             catch(Exception ex)
@@ -111,11 +125,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPut("EditProduct")]
-        public ActionResult EditProduct(Product product, string id) 
+        public async Task<ActionResult> EditProduct(Product product, string id) 
         {
             try
             {
-                var res = _inventoryManagementService.EditProduct(product, id);
+                var res = await _inventoryManagementService.EditProduct(product, id);
                 return Ok(res);
             }
             catch(Exception ex)
@@ -124,11 +138,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpDelete("DeleteProduct")]
-        public ActionResult DeleteProduct(Product product)
+        public async Task<ActionResult> DeleteProduct(Product product)
         {
             try
             {
-                var res = _inventoryManagementService.DeleteProduct(product.ProductId);
+                var res = await _inventoryManagementService.DeleteProduct(product.ProductId);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -137,14 +151,73 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost("AddProduct")]
-        public ActionResult AddProduct(Product product)
+        public async Task<ActionResult> AddProduct(Product product)
         {
             try
             {
-                var res = _inventoryManagementService.AddProducts(product);
+                var res = await _inventoryManagementService.AddProducts(product);
                 return Ok(res);
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetLowStockProduct")]
+
+        public async Task<ActionResult> GetLowStockProduct() 
+        {
+            try
+            {
+                var products = await _inventoryManagementRepository.GetLOwStockProducts();
+                return Ok(products);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetNoStockProducts")]
+
+        public async Task<ActionResult> GetNoStockProducts()
+        {
+            try
+            {
+                var products = await _inventoryManagementRepository.GetNoStockProducts();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GEtREcentProducts")]
+        public async Task<ActionResult> GEtREcentProducts()
+        {
+            try
+            {
+                var products = await _inventoryManagementRepository.GetRecentProducts();
+                return Ok(products);
+            }
+            catch( Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpGet("GetExpiredProduct")]
+        public async Task<ActionResult> GetExpiredProduct()
+        {
+            try
+            {
+                var products = await _inventoryManagementRepository.GetRecentProducts();
+                return Ok(products);
+            }
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }

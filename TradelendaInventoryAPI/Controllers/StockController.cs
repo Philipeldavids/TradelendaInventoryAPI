@@ -7,5 +7,8 @@ namespace TradelendaInventoryAPI.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
+        public StockController() { 
+        
+        }
     }
 }

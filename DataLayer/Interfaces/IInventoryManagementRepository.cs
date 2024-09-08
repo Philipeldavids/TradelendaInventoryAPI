@@ -11,6 +11,7 @@ namespace DataLayer.Interfaces
     public interface IInventoryManagementRepository
     {
         Task<bool> AddCategory(CategoryDTO category);
+        Task<Category> GetCategoryById(string id);
         Task<IEnumerable<Category>> GetGategoryList();
         Task<bool> EditCategory(CategoryDTO category);
         Task<bool> DeleteCategory(string CategoryId);
@@ -20,5 +21,9 @@ namespace DataLayer.Interfaces
         Task<bool> DeleteProduct(string Id);
 
         Task<IEnumerable<Product>> GetProductbyId(string Id);
+        Task<List<Product>> GetLOwStockProducts();
+        Task<List<Product>> GetNoStockProducts();
+        Task<List<Product>> GetRecentProducts();
+        Task<List<Product>> GetExpiredProducts();
     }
 }

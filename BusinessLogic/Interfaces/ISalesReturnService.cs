@@ -9,9 +9,9 @@ namespace BusinessLogic.Interfaces
 {
     public interface ISalesReturnService
     {
-        Task AddNewSalesReturnAsync(SalesReturn salesReturn);
+        Task<bool> AddNewSalesReturnAsync(SalesReturn salesReturn);
         Task<List<SalesReturn>> GetSalesReturnListAsync();
-        Task EditSalesReturnAsync(SalesReturn salesReturn);
-        Task DeleteSalesReturnAsync(string reference);
+        Task<bool> EditSalesReturnAsync(SalesReturn salesReturn);
+        Task<bool> DeleteSalesReturnAsync(string reference);
     }
 }

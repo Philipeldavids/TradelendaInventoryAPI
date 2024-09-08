@@ -63,8 +63,11 @@ namespace DataLayer
           
             modelBuilder.Entity<Stock>().HasKey(p=> p.StockId);
             modelBuilder.Entity<Warehouse>().HasOne(p => p.Stock);
-                
 
+            modelBuilder.Entity<Payment>().HasKey(p => p.Reference);    
+            modelBuilder.Entity<Sale>().HasKey(p => p.Reference);
+
+            modelBuilder.Entity<SalesReturn>().HasKey(p=>p.Reference);
             // Other configurations can go here
         }
         //public DbSet<AppUser> Users { get; set; }

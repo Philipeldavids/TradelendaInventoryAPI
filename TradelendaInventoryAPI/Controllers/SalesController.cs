@@ -19,8 +19,8 @@ namespace TradelendaInventoryAPI.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> AddNewSale([FromBody] Sale sale)
         {
-            await _salesService.AddNewSaleAsync(sale);
-            return Ok();
+            var res = _salesService.AddNewSaleAsync(sale);
+            return Ok(res);
         }
 
         [HttpGet("list")]
@@ -38,15 +38,15 @@ namespace TradelendaInventoryAPI.Controllers
         [HttpPut("edit")]
         public async Task<IActionResult> EditSale([FromBody] Sale sale)
         {
-            await _salesService.EditSaleAsync(sale);
-            return Ok();
+            var res = _salesService.EditSaleAsync(sale);
+            return Ok(res);
         }
 
         [HttpDelete("delete/{reference}")]
         public async Task<IActionResult> DeleteSale(string reference)
         {
-            await _salesService.DeleteSaleAsync(reference);
-            return Ok();
+            var res = _salesService.DeleteSaleAsync(reference);
+            return Ok(res);
         }
 
         [HttpGet("download-pdf/{reference}")]

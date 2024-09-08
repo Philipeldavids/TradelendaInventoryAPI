@@ -21,32 +21,45 @@ namespace BusinessLogic.Services
 
         public async Task AddNewSaleAsync(Sale sale)
         {
-            await _context.Sales.AddAsync(sale);
+            _context.Sales.Add(sale);
             await _context.SaveChangesAsync();
         }
 
         public async Task<List<Sale>> GetSalesListAsync()
         {
-            return await _context.Sales.ToListAsync();
+            return _context.Sales
+                .Include(p=>p.Customer)
+                .Include(p=>p.Supplier)
+                .Include(p=>p.Products).ToList();
         }
 
         public async Task<Sale> GetSaleDetailAsync(string reference)
         {
-            return await _context.Sales.FirstOrDefaultAsync(s => s.Reference == reference);
+            return await _context.Sales.Where(s => s.Reference == reference)
+                .Include(p => p.Customer)
+                .Include(p => p.Supplier)
+                .Include(p => p.Products).FirstOrDefaultAsync();
+
+
         }
 
         public async Task EditSaleAsync(Sale sale)
         {
-            var existingSale = await _context.Sales.FirstOrDefaultAsync(s => s.Reference == sale.Reference);
+            var existingSale = _context.Sales.Where(s => s.Reference == sale.Reference).FirstOrDefault();
             if (existingSale != null)
             {
-                existingSale.CustomerName = sale.CustomerName;
-                existingSale.Status = sale.Status;
-                existingSale.Total = sale.Total;
+                existingSale.Customer = sale.Customer;
+                existingSale.Products = sale.Products;
+                existingSale.Discount = sale.Discount;
+                existingSale.Supplier = sale.Supplier;                
+                existingSale.TaxPercentage = sale.TaxPercentage;
+                existingSale.Shipping = sale.Shipping;               
+                existingSale.Status = sale.Status;              
                 existingSale.Paid = sale.Paid;
                 existingSale.Due = sale.Due;
                 existingSale.PaymentStatus = sale.PaymentStatus;
                 existingSale.Biller = sale.Biller;
+                _context.Sales.Update(existingSale);
                 await _context.SaveChangesAsync();
             }
         }

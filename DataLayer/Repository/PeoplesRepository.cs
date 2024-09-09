@@ -13,7 +13,7 @@ namespace DataLayer.Repository
     public class PeoplesRepository : IPeoplesRepository
     {
         private readonly ApplicationDbContext _context;
-
+       
         public PeoplesRepository(ApplicationDbContext context)
         {
             _context = context;

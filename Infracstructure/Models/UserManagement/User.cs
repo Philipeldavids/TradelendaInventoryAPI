@@ -60,6 +60,8 @@ namespace Infracstructure.Models.UserManagement
         [Required]
         public string PasswordHash { get; set; }
 
+        public UserProfile UserProfile { get; set; }
+
         public Roles Role { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -72,6 +74,21 @@ namespace Infracstructure.Models.UserManagement
 
         public DateTime RefreshTokenExpiryTime { get; set; }
     }
+    public class UserProfile
+    {
+        [Required, MaxLength(100)]
+        public string FirstName { get; set; }
+        [Required, MaxLength(100)]
+        public string LastName { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; } = string.Empty;
+        public string City { get; set; }= string.Empty;
+        public string State { get; set; } = string.Empty;
+        public string PostalCode { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        public string UserImage { get; set; } = string.Empty;
 
+    }
 }
 

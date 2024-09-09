@@ -137,12 +137,12 @@ namespace TradelendaInventoryAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("DeleteProduct")]
-        public async Task<ActionResult> DeleteProduct(Product product)
+        [HttpDelete("DeleteProduct/{Id}")]
+        public async Task<ActionResult> DeleteProduct(string Id)
         {
             try
             {
-                var res = await _inventoryManagementService.DeleteProduct(product.ProductId);
+                var res = await _inventoryManagementService.DeleteProduct(Id);
                 return Ok(res);
             }
             catch (Exception ex)

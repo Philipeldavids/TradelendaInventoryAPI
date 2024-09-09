@@ -192,11 +192,7 @@ namespace TradelendaInventoryAPI.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (request.SelectRole.Customer == true) request.CreateUserRequest.Role = Infracstructure.Models.Roles.Customer;
-
-            if (request.SelectRole.ShopOwner == true) request.CreateUserRequest.Role = Infracstructure.Models.Roles.ShopOwner;
+            }            
 
             var result = await _userService.RegisterUserAsync(request.CreateUserRequest);
             if (!result.Success)

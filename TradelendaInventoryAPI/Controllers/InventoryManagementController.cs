@@ -63,7 +63,7 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
 
-        [HttpDelete("DeleteCategory")]
+        [HttpDelete("DeleteCategory/{id}")]
 
         public async Task<ActionResult> DeleteCategory(string id)
         {

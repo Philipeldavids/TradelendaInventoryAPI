@@ -193,6 +193,7 @@ using DataLayer.Services;
 using Infracstructure.DTOs.UserManagementDTOs;
 using Infracstructure.Models.UserManagement;
 using Microsoft.Extensions.Configuration;
+using Notification.Infrastructure.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -206,17 +207,19 @@ namespace BusinessLogic.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly PasswordHasher _passwordHasher;
-        private readonly TokenService _tokenService;
+        private readonly ITokenService _tokenService;
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public UserService(IUserRepository userRepository, PasswordHasher passwordHasher, TokenService tokenService, ApplicationDbContext context, IConfiguration configuration)
+        public UserService(IUserRepository userRepository, PasswordHasher passwordHasher, ITokenService tokenService, ApplicationDbContext context, IConfiguration configuration, IEmailService emailService)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _tokenService = tokenService;
             _context = context;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         public async Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterUserAsync(CreateUserRequestDTO request)
@@ -341,6 +344,103 @@ namespace BusinessLogic.Services
 
             return (true, null);
         }
+
+        public async Task<(bool Success, IEnumerable<string> Errors)> ForgotPasswordAsync(string email)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                return (false, new[] { "User not found" });
+            }
+
+            var resetToken = _tokenService.GeneratePasswordResetToken(user);
+
+            var resetMail = new MailRequestDto()
+            {
+                Message = resetToken,
+                Subject = "Reset your password",
+                ToEmail = user.Email,
+            };               
+
+            var emailResult = await _emailService.SendEmailAsync(resetMail);
+
+            if (emailResult == null)
+            {
+                return (false, new[] { "Failed to send password reset email" });
+            }
+
+            return (true, null);
+        }
+
+        public async Task<(bool Success, IEnumerable<string> Errors)> ResetPasswordAsync(string email, string newPassword)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                return (false, new[] { "User not found" });
+            }
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, newPassword);
+            var result = await _userRepository.UpdateUserAsync(user);
+
+            if (!result)
+            {
+                return (false, new[] { "Password reset failed" });
+            }
+
+            return (true, null);
+        }
+
+        //public async Task<(bool Success, IEnumerable<string> Errors)> ResendConfirmationEmailAsync(string email)
+        //{
+        //    var user = await _userRepository.GetUserByEmailAsync(email);
+        //    if (user == null)
+        //    {
+        //        return (false, new[] { "User not found" });
+        //    }
+
+        //    if (user.EmailConfirmed)
+        //    {
+        //        return (false, new[] { "Email is already confirmed" });
+        //    }
+
+        //    var token = _tokenService.GenerateEmailConfirmationToken(user);
+        //    var emailResult = await _emailService.SendEmailConfirmationAsync(user.Email, token);
+
+        //    if (!emailResult)
+        //    {
+        //        return (false, new[] { "Failed to resend confirmation email" });
+        //    }
+
+        //    return (true, null);
+        //}
+
+
+        //public async Task<(bool Success, IEnumerable<string> Errors)> ConfirmEmailAsync(string userId, string token)
+        //{
+        //    var user = await _userRepository.GetUserByIdAsync(userId);
+        //    if (user == null)
+        //    {
+        //        return (false, new[] { "User not found" });
+        //    }
+
+        //    if (user.EmailConfirmationToken != token)
+        //    {
+        //        return (false, new[] { "Invalid confirmation token" });
+        //    }
+
+        //    user.EmailConfirmed = true;
+        //    var result = await _userRepository.UpdateUserAsync(user);
+
+        //    if (!result)
+        //    {
+        //        return (false, new[] { "Email confirmation failed" });
+        //    }
+
+        //    return (true, null);
+        //}
+
+
     }
 
 }

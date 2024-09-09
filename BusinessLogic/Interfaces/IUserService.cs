@@ -28,5 +28,7 @@ namespace BusinessLogic.Interfaces
         Task<User> GetUserByIdAsync(string id);
         Task<(bool Success, IEnumerable<string> Errors)> UpdateUserAsync(string id, UpdateUserRequestDTO request);
         Task<(bool Success, IEnumerable<string> Errors)> DeleteUserAsync(string id);
+        Task<(bool Success, IEnumerable<string> Errors)> ResetPasswordAsync(string email, string newPassword);
+        Task<(bool Success, IEnumerable<string> Errors)> ForgotPasswordAsync(string email);
     }
 }

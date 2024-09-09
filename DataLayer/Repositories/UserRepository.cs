@@ -83,6 +83,11 @@ namespace DataLayer.Repositories
             return _context.Users.Where(u => u.Username == username).FirstOrDefault();
         }
 
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+        }
+
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users.ToListAsync();

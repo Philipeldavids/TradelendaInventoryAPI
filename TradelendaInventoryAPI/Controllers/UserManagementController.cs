@@ -236,6 +236,41 @@ namespace TradelendaInventoryAPI.Controllers
             return Ok(new { Token = result.Token, RefreshToken = result.RefreshToken });
         }
 
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _userService.ResetPasswordAsync(model.Email, model.NewPassword);
+            if (!result.Success)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok("Password reset successfully");
+        }
+
+        
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _userService.ForgotPasswordAsync(model.Email);
+            if (!result.Success)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok("Password reset link sent to email");
+        }
+
         [HttpGet("GetUsers")]
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> GetAllUsers()

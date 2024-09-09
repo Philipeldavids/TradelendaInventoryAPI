@@ -10,5 +10,7 @@ namespace DataLayer.Interfaces
         Task<bool> AddUserAsync(User user);
         Task<bool> UpdateUserAsync(User user);
         Task<bool> DeleteUserAsync(User user);
+        Task<User> GetUserByEmailAsync(string email);
+      
     }
 }

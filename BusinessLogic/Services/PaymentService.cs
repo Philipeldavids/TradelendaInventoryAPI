@@ -19,25 +19,29 @@ namespace BusinessLogic.Services
             _context = context;
         }
 
-        public async Task CreatePaymentAsync(Payment payment)
+        public async Task<bool> CreatePaymentAsync(Payment payment)
         {
-            await _context.Payments.AddAsync(payment);
+             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<List<Payment>> GetPaymentsAsync()
         {
-            return await _context.Payments.ToListAsync();
+            return _context.Payments.ToList();
         }
 
-        public async Task DeletePaymentAsync(string reference)
+        public async Task<bool> DeletePaymentAsync(string reference)
         {
-            var payment = await _context.Payments.FirstOrDefaultAsync(p => p.Reference == reference);
+            var payment = _context.Payments.Where(p => p.Reference == reference).FirstOrDefault();
             if (payment != null)
             {
                 _context.Payments.Remove(payment);
                 await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
     }
 }

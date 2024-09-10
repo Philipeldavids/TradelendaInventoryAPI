@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240908174820_newadditions")]
+    partial class newadditions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,7 +101,7 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.Payment", b =>
                 {
-                    b.Property<string>("Reference")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Date")
@@ -117,7 +120,11 @@ namespace DataLayer.Migrations
                     b.Property<decimal>("ReceivedAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Reference");
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Payments");
                 });
@@ -176,7 +183,7 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SaleReference")
+                    b.Property<string>("SaleId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StockId")
@@ -201,7 +208,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SaleReference");
+                    b.HasIndex("SaleId");
 
                     b.HasIndex("StockId");
 
@@ -239,7 +246,7 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.Sale", b =>
                 {
-                    b.Property<string>("Reference")
+                    b.Property<string>("SaleId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Biller")
@@ -266,6 +273,10 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Shipping")
                         .HasColumnType("decimal(18,2)");
 
@@ -279,7 +290,7 @@ namespace DataLayer.Migrations
                     b.Property<decimal>("TaxPercentage")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Reference");
+                    b.HasKey("SaleId");
 
                     b.HasIndex("CustomerId");
 
@@ -290,7 +301,7 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.SalesReturn", b =>
                 {
-                    b.Property<string>("Reference")
+                    b.Property<string>("SalesReturnId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CustomerId")
@@ -313,6 +324,10 @@ namespace DataLayer.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Shipping")
                         .HasColumnType("decimal(18,2)");
 
@@ -329,7 +344,7 @@ namespace DataLayer.Migrations
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Reference");
+                    b.HasKey("SalesReturnId");
 
                     b.HasIndex("CustomerId");
 
@@ -517,7 +532,7 @@ namespace DataLayer.Migrations
 
                     b.HasOne("Infracstructure.Models.Sale", null)
                         .WithMany("Products")
-                        .HasForeignKey("SaleReference");
+                        .HasForeignKey("SaleId");
 
                     b.HasOne("Infracstructure.Models.Stock", null)
                         .WithMany("Products")

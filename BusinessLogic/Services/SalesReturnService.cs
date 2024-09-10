@@ -19,38 +19,44 @@ namespace BusinessLogic.Services
             _context = context;
         }
 
-        public async Task AddNewSalesReturnAsync(SalesReturn salesReturn)
+        public async Task<bool> AddNewSalesReturnAsync(SalesReturn salesReturn)
         {
-            await _context.SalesReturns.AddAsync(salesReturn);
+            _context.SalesReturns.Add(salesReturn);
             await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<SalesReturn>> GetSalesReturnListAsync()
         {
-            return await _context.SalesReturns.ToListAsync();
+            return _context.SalesReturns.ToList();
         }
 
-        public async Task EditSalesReturnAsync(SalesReturn salesReturn)
+        public async Task<bool> EditSalesReturnAsync(SalesReturn salesReturn)
         {
-            var existingReturn = await _context.SalesReturns.FirstOrDefaultAsync(sr => sr.Reference == salesReturn.Reference);
+            var existingReturn = _context.SalesReturns.Where(sr => sr.Reference == salesReturn.Reference).FirstOrDefault();
             if (existingReturn != null)
             {
                 existingReturn.Status = salesReturn.Status;
                 existingReturn.Product = salesReturn.Product;
                 existingReturn.Quantity = salesReturn.Quantity;
                 existingReturn.Total = salesReturn.Total;
+                _context.SalesReturns.Update(existingReturn);
                 await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
 
-        public async Task DeleteSalesReturnAsync(string reference)
+        public async Task<bool> DeleteSalesReturnAsync(string reference)
         {
-            var salesReturn = await _context.SalesReturns.FirstOrDefaultAsync(sr => sr.Reference == reference);
+            var salesReturn = _context.SalesReturns.Where(sr => sr.Reference == reference).FirstOrDefault();
             if (salesReturn != null)
             {
                 _context.SalesReturns.Remove(salesReturn);
                 await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
     }
 }

@@ -5,6 +5,7 @@ using Infracstructure.Models.DTO;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace DataLayer.Repository
             Category category1 = new Category();
             category1.CategoryName = category.CategoryName;
             category1.CategorySLug = category.CategoryName.ToLower();
-            category1.CreatedOn = DateTime.Now;
+            category1.CreatedOn = DateTime.UtcNow;
             category1.Status = true; 
 
             _context.Categories.Add(category1);
@@ -35,6 +36,11 @@ namespace DataLayer.Repository
             return false;
         }
 
+        public async Task<Category> GetCategoryById(string id)
+        {
+            var category = _context.Categories.Where(x=>x.CategoryId == id).FirstOrDefault();
+            return category;
+        }
         public async Task<IEnumerable<Category>> GetGategoryList()
         {
             var categories = _context.Categories.ToList();
@@ -73,13 +79,15 @@ namespace DataLayer.Repository
         public async Task<IEnumerable<Product>> GetallProducts()
         {
 
-            var products = _context.Products.ToList();
+            var products = _context.Products
+                .Include(x => x.Category).AsQueryable();
             return products;
             
         }
         public async Task<IEnumerable<Product>> GetProductbyId(string Id)
         {
-            var products = _context.Products.Where(x=>x.ProductId== Id).ToList();
+            var products = _context.Products.Where(x=>x.ProductId== Id)
+                .Include(produpct => produpct.Category).ToList();
 
             return products;
         }
@@ -89,7 +97,7 @@ namespace DataLayer.Repository
 
             if(category == null)
             {
-                category = new Category { CategoryId = product.CategoryId, CategoryName = "New Category", CategorySLug = "new category" };
+                category = new Category { CategoryId = Guid.NewGuid().ToString(), CategoryName = "New Category", CategorySLug = "new category" };
                 _context.Categories.Add(category);
                 _context.SaveChanges(); // Save the new category
             }
@@ -116,7 +124,12 @@ namespace DataLayer.Repository
                 product.Price = produt.Price;
                 product.Quantity = produt.Quantity;
                 product.SKU = produt.SKU;
+                product.Store = produt.Store;
+                product.Warehouse = produt.Warehouse;
+                product.ExpiredDate = produt.ExpiredDate;
+                product.ManufacturedDate = produt.ManufacturedDate;
                 product.Unit = produt.Unit;
+                product.UnitCost = produt.UnitCost;
 
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync();
@@ -135,6 +148,52 @@ namespace DataLayer.Repository
                 return true;
             }
             return false;
+        }
+
+        public async Task<List<Product>> GetLOwStockProducts()
+        {
+            var product = _context.Products.Where(x=>x.Quantity <= 10)
+                .Include(produpct=>produpct.Category)
+                .ToList();
+
+            if (product != null)
+            {
+                return product;
+            }
+            return null;
+
+        }
+        public async Task<List<Product>> GetNoStockProducts()
+        {
+            var product = _context.Products.Where(x => x.Quantity == 0)
+                .Include(produpct => produpct.Category)
+                .ToList();
+
+            if (product != null)
+            {
+                return product;
+            }
+            return null;
+
+        }
+
+        public async Task<List<Product>> GetRecentProducts()
+        {
+            var product = _context.Products.Where(x => x.CreatedAt >= DateTime.UtcNow.AddDays(-10))
+                .Include(produpct => produpct.Category)
+                .ToList();
+            if (product != null)
+                return product;
+            return null;
+        }
+        public async Task<List<Product>> GetExpiredProducts()
+        {
+            var product = _context.Products.Where(x => x.ExpiredDate <= DateTime.UtcNow && x.IsExpired == true)
+                .Include(produpct => produpct.Category)
+                .ToList();
+            if (product != null)
+                return product;
+            return null;
         }
     }
 }

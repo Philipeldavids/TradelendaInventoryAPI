@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240905110038_add1")]
+    partial class add1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,32 +99,6 @@ namespace DataLayer.Migrations
                     b.ToTable("OrderItem");
                 });
 
-            modelBuilder.Entity("Infracstructure.Models.Payment", b =>
-                {
-                    b.Property<string>("Reference")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("PayingAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("PaymentType")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ReceivedAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Reference");
-
-                    b.ToTable("Payments");
-                });
-
             modelBuilder.Entity("Infracstructure.Models.Product", b =>
                 {
                     b.Property<string>("ProductId")
@@ -145,23 +122,13 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ExpiredDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsExpired")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("ManufacturedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ProductDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -176,34 +143,13 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SaleReference")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("StockId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Store")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("UnitCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Warehouse")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("SaleReference");
-
-                    b.HasIndex("StockId");
 
                     b.ToTable("Products");
                 });
@@ -231,118 +177,13 @@ namespace DataLayer.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Infracstructure.Models.Sale", b =>
-                {
-                    b.Property<string>("Reference")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Biller")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Due")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Paid")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Shipping")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SupplierID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("TaxPercentage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Reference");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("SupplierID");
-
-                    b.ToTable("Sales");
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.SalesReturn", b =>
-                {
-                    b.Property<string>("Reference")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("NetUnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Shipping")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Stock")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Reference");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("SalesReturns");
-                });
-
             modelBuilder.Entity("Infracstructure.Models.Stock", b =>
                 {
-                    b.Property<string>("StockId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
@@ -350,18 +191,22 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Quantity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("StockId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WarehouseID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StockId");
-
-                    b.HasIndex("WarehouseID")
-                        .IsUnique();
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Stocks");
                 });
@@ -422,6 +267,46 @@ namespace DataLayer.Migrations
                     b.ToTable("Suppliers");
                 });
 
+            modelBuilder.Entity("Infracstructure.Models.UserManagement.Permission", b =>
+                {
+                    b.Property<string>("PermissionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PermissionName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("PermissionId");
+
+                    b.ToTable("Permissons");
+                });
+
+            modelBuilder.Entity("Infracstructure.Models.UserManagement.Role", b =>
+                {
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("Infracstructure.Models.UserManagement.User", b =>
                 {
                     b.Property<string>("UserId")
@@ -452,10 +337,7 @@ namespace DataLayer.Migrations
                     b.Property<DateTime>("RefreshTokenExpiryTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -500,11 +382,13 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.OrderItem", b =>
                 {
-                    b.HasOne("Infracstructure.Models.PurchaseOrder", null)
+                    b.HasOne("Infracstructure.Models.PurchaseOrder", "Order")
                         .WithMany("Items")
                         .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Product", b =>
@@ -515,69 +399,47 @@ namespace DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Infracstructure.Models.Sale", null)
-                        .WithMany("Products")
-                        .HasForeignKey("SaleReference");
-
-                    b.HasOne("Infracstructure.Models.Stock", null)
-                        .WithMany("Products")
-                        .HasForeignKey("StockId");
-
                     b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseOrder", b =>
                 {
-                    b.HasOne("Infracstructure.Models.Customer", null)
-                        .WithOne("PurchaseOrders")
-                        .HasForeignKey("Infracstructure.Models.PurchaseOrder", "CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.Sale", b =>
-                {
                     b.HasOne("Infracstructure.Models.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("PurchaseOrders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Infracstructure.Models.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierID");
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("Infracstructure.Models.SalesReturn", b =>
+            modelBuilder.Entity("Infracstructure.Models.Stock", b =>
                 {
-                    b.HasOne("Infracstructure.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Infracstructure.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
-
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Infracstructure.Models.Stock", b =>
+            modelBuilder.Entity("Infracstructure.Models.UserManagement.Permission", b =>
                 {
-                    b.HasOne("Infracstructure.Models.Warehouse", null)
-                        .WithOne("Stock")
-                        .HasForeignKey("Infracstructure.Models.Stock", "WarehouseID")
+                    b.HasOne("Infracstructure.Models.UserManagement.Role", "Roles")
+                        .WithMany("Permissions")
+                        .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Infracstructure.Models.UserManagement.Role", b =>
+                {
+                    b.HasOne("Infracstructure.Models.UserManagement.User", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Warehouse", b =>
@@ -593,8 +455,7 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.Customer", b =>
                 {
-                    b.Navigation("PurchaseOrders")
-                        .IsRequired();
+                    b.Navigation("PurchaseOrders");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseOrder", b =>
@@ -602,20 +463,14 @@ namespace DataLayer.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Infracstructure.Models.Sale", b =>
+            modelBuilder.Entity("Infracstructure.Models.UserManagement.Role", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Permissions");
                 });
 
-            modelBuilder.Entity("Infracstructure.Models.Stock", b =>
+            modelBuilder.Entity("Infracstructure.Models.UserManagement.User", b =>
                 {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.Warehouse", b =>
-                {
-                    b.Navigation("Stock")
-                        .IsRequired();
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

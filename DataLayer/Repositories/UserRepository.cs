@@ -75,12 +75,12 @@ namespace DataLayer.Repositories
 
         public async Task<User> GetUserByIdAsync(string userId)
         {
-            return await _context.Users.FindAsync(userId);
+            return _context.Users.Where(p => p.UserId == userId).FirstOrDefault();
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return _context.Users.Where(u => u.Username == username).FirstOrDefault();
         }
 
         public async Task<User> GetUserByEmailAsync(string email)

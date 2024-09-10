@@ -9,6 +9,7 @@ namespace TradelendaInventoryAPI.Controllers
     [Route("api/[controller]")]
     public class StockController : ControllerBase
     {
+
         private readonly IStockService _stockService;
 
         public StockController(IStockService stockService)
@@ -113,6 +114,7 @@ namespace TradelendaInventoryAPI.Controllers
             var transferList = await _stockService.GetStockTransferListAsync();
             return Ok(transferList);
         }
+        
     }
 
 }

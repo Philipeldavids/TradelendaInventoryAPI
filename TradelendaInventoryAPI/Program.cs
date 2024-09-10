@@ -27,6 +27,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IInventoryManagementService, InventoryManagementService>();
 builder.Services.AddScoped<IInventoryManagementRepository, InventoryManagementRepository>();
+builder.Services.AddScoped<IPeoplesRepository, PeoplesRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

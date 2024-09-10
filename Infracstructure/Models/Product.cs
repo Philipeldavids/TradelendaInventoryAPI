@@ -16,9 +16,11 @@ namespace Infracstructure.Models
         public string ProductId { get; set; } = Guid.NewGuid().ToString();
 
         public string ProductName { get; set; }
-        public string ProductDescription { get; set; }       
-        
-        public Category Category { get; set; }
+        public string ProductDescription { get; set; }  
+        public string Store { get; set; }
+        public string Warehouse{ get; set; }
+
+        public Category Category { get; set; } = new Category();
 
         public string CategoryId { get; set; }
         
@@ -35,7 +37,11 @@ namespace Infracstructure.Models
       
         public string SKU { get; set; }
        
-       
+       public string ProductImageUrl { get; set; }  
+
+        public DateTime ManufacturedDate { get; set; }
+        public DateTime ExpiredDate { get; set; }
+        public decimal UnitCost { get; set; }
         public DateTime CreatedAt { get; set; }
        
 

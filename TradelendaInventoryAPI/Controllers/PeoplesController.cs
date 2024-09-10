@@ -1,98 +1,249 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataLayer.Interfaces;
+using Infracstructure.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TradelendaInventoryAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class PeoplesController : ControllerBase
     {
 
-        public PeoplesController()
+        private readonly IPeoplesRepository _peoplesRepository;
+        public PeoplesController(IPeoplesRepository peoplesRepository)
         {
-            
+            _peoplesRepository = peoplesRepository;                
         }
 
+        
         [HttpPost]
-        public ActionResult AddStores()
+        public ActionResult AddStores(Store store)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.AddStore(store);
+                return Ok(res);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+            
         }
         [HttpGet]
         public ActionResult GetStores()
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.GetStore();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpDelete]
-        public ActionResult DeleteStores()
+        public ActionResult DeleteStores(string Id)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.DeleteStores(Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpPut]
-        public ActionResult EditStores()
+        public ActionResult EditStores(Store store, string Id)
         {
+            try
+            {
+                var res = _peoplesRepository.EditStore(store, Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
 
-            return Ok();
+            }
         }
         [HttpGet]
         public ActionResult GetWarehouse()
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.GetWarehouse();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpDelete]
-        public ActionResult DeleteWarehouse()
+        public ActionResult DeleteWarehouse(string Id)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.DeleteWarehouse(Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
+        
         [HttpPut]
-        public ActionResult EditWarehouse()
+        public ActionResult EditWarehouse(Warehouse warehouse, string Id)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.EditWarehouse(warehouse, Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpPost]
-        public ActionResult AddWarehouse()
+        public ActionResult AddWarehouse(Warehouse warehouse)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.AddWarehouse(warehouse);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpGet]
         public ActionResult GetCustomer()
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.GetCustomers();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpDelete]        
-        public ActionResult DeleteCustomer()
+        public ActionResult DeleteCustomer(string Id)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.DeleteWarehouse(Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpPost]
-        public ActionResult AddCUstomer()
+        public ActionResult AddCUstomer(Customer customer)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.AddCustomer(customer);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpPut]
-        public ActionResult EditCustomer()
+        public ActionResult EditCustomer(Customer customer, string Id)
         {
-            return Ok();    
+            try
+            {
+                var res = _peoplesRepository.EditCustomer(customer, Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpGet]
         public ActionResult GetSupplier()
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.GetSupplier();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpPost]
-        public ActionResult AddSupplier()
+        public ActionResult AddSupplier(Supplier supplier)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.AddSupplier(supplier);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpDelete]
-        public ActionResult DeleteSupplier()
+        public ActionResult DeleteSupplier(string Id)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.DeleteSupplier(Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
         [HttpPut]
-        public ActionResult EditSupplier()
+        public ActionResult EditSupplier(Supplier supplier, string Id)
         {
-            return Ok();
+            try
+            {
+                var res = _peoplesRepository.EditSupplier(supplier, Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
     }
 }

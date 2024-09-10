@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,8 @@ namespace Infracstructure.Models
 {
     public class Purchase
     {
-        public int Id { get; set; }
+        [Key]
+        public int PurchaseId { get; set; }
 
         public Supplier Supplier { get; set; }
 
@@ -44,7 +46,7 @@ namespace Infracstructure.Models
         {
             get
             {
-                return Products?.Sum(p => p.Price) ?? 0;
+                return Products?.Sum(p => p.UnitCost) ?? 0;
             }
         }
 

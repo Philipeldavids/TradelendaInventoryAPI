@@ -9,8 +9,8 @@ namespace BusinessLogic.Interfaces
 {
     public interface IPaymentService
     {
-        Task CreatePaymentAsync(Payment payment);
+        Task<bool> CreatePaymentAsync(Payment payment);
         Task<List<Payment>> GetPaymentsAsync();
-        Task DeletePaymentAsync(string reference);
+        Task<bool> DeletePaymentAsync(string reference);
     }
 }

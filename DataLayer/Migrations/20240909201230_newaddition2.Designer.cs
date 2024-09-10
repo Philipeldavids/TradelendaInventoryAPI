@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240909201230_newaddition2")]
+    partial class newaddition2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,10 +56,6 @@ namespace DataLayer.Migrations
 
                     b.Property<int>("Code")
                         .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -419,9 +418,8 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("PhoneNumber")
+                        .HasColumnType("bigint");
 
                     b.HasKey("SupplierID");
 
@@ -551,6 +549,9 @@ namespace DataLayer.Migrations
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -893,7 +894,8 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.Customer", b =>
                 {
-                    b.Navigation("PurchaseOrders");
+                    b.Navigation("PurchaseOrders")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseOrder", b =>

@@ -1,4 +1,7 @@
-﻿using DataLayer.Interfaces;
+﻿using BusinessLogic.Interfaces;
+using DataLayer.Interfaces;
+using DataLayer.Repository;
+using Infracstructure.DTOs;
 using Infracstructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -8,14 +11,16 @@ namespace TradelendaInventoryAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+   
     public class PeoplesController : ControllerBase
     {
-
         private readonly IPeoplesRepository _peoplesRepository;
-        public PeoplesController(IPeoplesRepository peoplesRepository)
+
+        private readonly IPeopleService _peoplesService;
+        public PeoplesController(IPeopleService peoplesService, IPeoplesRepository peoplesRepository)
         {
-            _peoplesRepository = peoplesRepository;                
+            _peoplesService = peoplesService;
+            _peoplesRepository = peoplesRepository;
         }
 
         
@@ -134,11 +139,12 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GetCustomer()
+       
+        public async Task<ActionResult> GetCustomer()
         {
             try
             {
-                var res = _peoplesRepository.GetCustomers();
+                var res = await _peoplesRepository.GetCustomers();
                 return Ok(res);
             }
             catch (Exception ex)
@@ -162,11 +168,19 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddCUstomer(Customer customer)
+        public async Task<ActionResult> AddCustomer([FromBody]CustomerRegisterDTO customer)
         {
             try
             {
-                var res = _peoplesRepository.AddCustomer(customer);
+                Customer customr = new Customer();
+                customr.Email = customer.Email;
+                customr.PhoneNumber = customer.PhoneNumber;
+                customr.FullName = customer.Name;
+                customr.ShippingAddress = customer.Address + ", " +customer.City+ ", " + customer.Country;
+                customr.Description = customer.Description;
+                
+
+                var res = await _peoplesService.AddCustomer(customr);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -208,7 +222,7 @@ namespace TradelendaInventoryAPI.Controllers
         {
             try
             {
-                var res = _peoplesRepository.AddSupplier(supplier);
+                var res = _peoplesService.AddSupplier(supplier);
                 return Ok(res);
             }
             catch (Exception ex)

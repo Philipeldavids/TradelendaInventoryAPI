@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -35,8 +35,8 @@ namespace DataLayer
             //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.CreateUsers.ToString(), Description = "Can create users" }
             //};
 
-           
-            
+
+
             //modelBuilder.Entity<Permission>().HasOne(p=>p.Roles)
             //    .WithMany(p=>p.Permissions)
             //    .HasForeignKey(p=>p.PermissionId);
@@ -47,12 +47,13 @@ namespace DataLayer
 
             // Define composite primary key using HasKey
             modelBuilder.Entity<User>()
-               .HasKey(c=>c.UserId);
-
+               .HasKey(c => c.UserId);
+            modelBuilder.Entity<User>().HasOne(c => c.UserProfil);
+           
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category);// Each Product has one Category
                                          // Each Category can have many Products
-            modelBuilder.Entity<OrderItem>().HasKey(p => p.OrderItemId);
+            
                 
 
             modelBuilder.Entity<OrderItem>().HasKey(p => p.OrderItemId);
@@ -68,11 +69,14 @@ namespace DataLayer
             modelBuilder.Entity<Sale>().HasKey(p => p.Reference);
 
             modelBuilder.Entity<SalesReturn>().HasKey(p=>p.Reference);
+
+           
             // Other configurations can go here
         }
         //public DbSet<AppUser> Users { get; set; }
 
-        public DbSet<User> Users { get; set; }       
+         
+        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Stock> Stocks { get; set; }

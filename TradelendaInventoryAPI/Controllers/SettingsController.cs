@@ -7,5 +7,6 @@ namespace TradelendaInventoryAPI.Controllers
     [ApiController]
     public class SettingsController : ControllerBase
     {
+        
     }
 }

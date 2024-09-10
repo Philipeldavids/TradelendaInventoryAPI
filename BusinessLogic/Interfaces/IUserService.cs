@@ -30,5 +30,8 @@ namespace BusinessLogic.Interfaces
         Task<(bool Success, IEnumerable<string> Errors)> DeleteUserAsync(string id);
         Task<(bool Success, IEnumerable<string> Errors)> ResetPasswordAsync(string email, string newPassword);
         Task<(bool Success, IEnumerable<string> Errors)> ForgotPasswordAsync(string email);
+
+        Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterCustomerUserAsync(User user);
+        Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterStoreUserAsync(User user);
     }
 }

@@ -17,6 +17,8 @@ using DataLayer.Interfaces;
 using DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Infracstructure.Models.UserManagement;
+using Microsoft.Extensions.DependencyInjection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,11 +57,13 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<PasswordHasher>();
 builder.Services.AddScoped<INotificationService,NotificationService>();
+builder.Services.AddScoped<IPeopleService, PeoplesService>();   
 builder.Services.AddScoped<IEmailService,EmailService>();
 builder.Services.AddScoped<ISalesService, SalesService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();

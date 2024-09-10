@@ -37,32 +37,32 @@
 //}
 
 
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Infracstructure.Models.UserManagement
 {
-    public class User
+    public class User : IdentityUser
     {
-        public string UserId { get; set; } = Guid.NewGuid().ToString();
-
-        [Required, MaxLength(50)]
-        public string Username { get; set; }
+        [Key]
+        public string UserId { get; set; } = Guid.NewGuid().ToString();        
 
         [Required, EmailAddress, MaxLength(100)]
         public string Email { get; set; }
 
         [Required]
         public string PasswordHash { get; set; }
-
-        public UserProfile UserProfile { get; set; }
-
         public Roles Role { get; set; }
+
+
+        [AllowNull]
+        public UserProfile UserProfil { get; set; } = new UserProfile();   
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
@@ -76,11 +76,14 @@ namespace Infracstructure.Models.UserManagement
     }
     public class UserProfile
     {
+        [Key]
+        public string UserProfileId { get; set; } = Guid.NewGuid().ToString();
+
+        public string UserId { get; set; }
         [Required, MaxLength(100)]
         public string FirstName { get; set; }
         [Required, MaxLength(100)]
-        public string LastName { get; set; }
-        [Required]
+        public string LastName { get; set; }     
         public string PhoneNumber { get; set; }
         public string Address { get; set; } = string.Empty;
         public string City { get; set; }= string.Empty;
@@ -90,5 +93,6 @@ namespace Infracstructure.Models.UserManagement
         public string UserImage { get; set; } = string.Empty;
 
     }
+    
 }
 

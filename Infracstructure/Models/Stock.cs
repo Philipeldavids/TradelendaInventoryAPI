@@ -21,4 +21,26 @@ namespace Infracstructure.Models
        
 
     }
+
+    public class StockAdjustment
+    {
+        public string StockAdjustmentId { get; set; } = Guid.NewGuid().ToString();
+        public string StockId { get; set; }
+        public int QuantityAdjusted { get; set; }
+        public string Reason { get; set; }
+        public DateTime AdjustmentDate { get; set; }
+        public string AdjustedBy { get; set; }
+    }
+
+    public class StockTransfer
+    {
+        public string StockTransferId { get; set; } = Guid.NewGuid().ToString();
+        public string FromWarehouseId { get; set; }
+        public string ToWarehouseId { get; set; }
+        public int QuantityTransferred { get; set; }
+        public DateTime TransferDate { get; set; }
+        public Warehouse FromWarehouse { get; set; }
+        public Warehouse ToWarehouse { get; set; }
+    }
+
 }

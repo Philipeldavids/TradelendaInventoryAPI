@@ -91,8 +91,10 @@ namespace DataLayer
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<SalesReturn> SalesReturns { get; set; }
-
-
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<PurchaseReturn> PurchaseReturns { get; set; }
+        public DbSet<StockAdjustment> StockAdjustments { get; set; }
+        public DbSet<StockTransfer> StockTransfers { get; set; }
 
     }
 }

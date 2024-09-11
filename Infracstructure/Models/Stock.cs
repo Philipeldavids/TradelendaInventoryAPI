@@ -11,7 +11,7 @@ namespace Infracstructure.Models
     {
         public string StockId { get; set; } = Guid.NewGuid().ToString();
         public string WarehouseID { get; set; }
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
 
         public DateTime DateAdded { get; set; }
         
@@ -34,9 +34,7 @@ namespace Infracstructure.Models
 
     public class StockTransfer
     {
-        public string StockTransferId { get; set; } = Guid.NewGuid().ToString();
-        public string FromWarehouseId { get; set; }
-        public string ToWarehouseId { get; set; }
+        public string StockTransferId { get; set; } = Guid.NewGuid().ToString();        
         public int QuantityTransferred { get; set; }
         public DateTime TransferDate { get; set; }
         public Warehouse FromWarehouse { get; set; }

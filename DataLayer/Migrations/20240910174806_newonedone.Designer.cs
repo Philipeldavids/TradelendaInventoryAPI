@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240910174806_newonedone")]
+    partial class newonedone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -577,10 +580,6 @@ namespace DataLayer.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
-                    b.Property<string>("ContactPerson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -751,6 +750,10 @@ namespace DataLayer.Migrations
                     b.Property<string>("WarehouseId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ContactPersonSupplierID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ContactPhone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -764,17 +767,13 @@ namespace DataLayer.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SupplierID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("WarehouseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("WarehouseId");
 
-                    b.HasIndex("SupplierID");
+                    b.HasIndex("ContactPersonSupplierID");
 
                     b.ToTable("Warehouses");
                 });
@@ -1042,13 +1041,13 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("Infracstructure.Models.Warehouse", b =>
                 {
-                    b.HasOne("Infracstructure.Models.Supplier", "Supplier")
+                    b.HasOne("Infracstructure.Models.Supplier", "ContactPerson")
                         .WithMany()
-                        .HasForeignKey("SupplierID")
+                        .HasForeignKey("ContactPersonSupplierID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Supplier");
+                    b.Navigation("ContactPerson");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

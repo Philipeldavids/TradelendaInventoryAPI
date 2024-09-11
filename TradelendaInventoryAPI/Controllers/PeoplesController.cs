@@ -82,11 +82,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GetWarehouse()
+        public async Task<ActionResult> GetWarehouse()
         {
             try
             {
-                var res = _peoplesRepository.GetWarehouse();
+                var res = await _peoplesRepository.GetWarehouse();
                 return Ok(res);
             }
             catch (Exception ex)
@@ -96,11 +96,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpDelete]
-        public ActionResult DeleteWarehouse(string Id)
+        public async Task<ActionResult> DeleteWarehouse(string Id)
         {
             try
             {
-                var res = _peoplesRepository.DeleteWarehouse(Id);
+                var res = await _peoplesRepository.DeleteWarehouse(Id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -111,11 +111,11 @@ namespace TradelendaInventoryAPI.Controllers
         }
         
         [HttpPut]
-        public ActionResult EditWarehouse(Warehouse warehouse, string Id)
+        public async Task<ActionResult> EditWarehouse(Warehouse warehouse, string Id)
         {
             try
             {
-                var res = _peoplesRepository.EditWarehouse(warehouse, Id);
+                var res = await _peoplesRepository.EditWarehouse(warehouse, Id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -125,11 +125,20 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddWarehouse(Warehouse warehouse)
+        public async Task<ActionResult> AddWarehouse([FromBody]CreateWarehouseDTO warehouse)
         {
             try
             {
-                var res = _peoplesRepository.AddWarehouse(warehouse);
+                Warehouse warehouse1 = new Warehouse();
+
+                warehouse1.ContactPhone = warehouse.WorkPhone;
+                warehouse1.Supplier.ContactPerson = warehouse.ContactPerson;
+                warehouse1.Supplier.Country = warehouse.Address1 + " | " +warehouse.Address2 + " " + warehouse.City + ", "+ warehouse.State + ", " + warehouse.ZipCode+" "+ warehouse.Country;
+                warehouse1.WarehouseName = warehouse.WarehouseName;
+                warehouse1.Supplier.PhoneNumber = warehouse.PhoneNumber;
+                warehouse1.Supplier.Email = warehouse.Email;
+
+                var res = await _peoplesRepository.AddWarehouse(warehouse1);
                 return Ok(res);
             }
             catch (Exception ex)

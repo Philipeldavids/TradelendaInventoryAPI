@@ -29,7 +29,7 @@ namespace BusinessLogic.Services
 
         public async Task<IEnumerable<Stock>> GetStockListAsync()
         {
-            return await _context.Stocks.Include(s => s.Products).Include(s => s.Warehouse).ToListAsync();
+            return await _context.Stocks.Include(s => s.Products).ToListAsync();
         }
 
         public async Task<(bool Success, string Message)> EditStockAsync(string stockId, Stock stock)

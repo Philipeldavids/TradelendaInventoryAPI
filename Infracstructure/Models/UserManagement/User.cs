@@ -70,7 +70,7 @@ namespace Infracstructure.Models.UserManagement
 
         public bool IsActive { get; set; } = true;
 
-        public string RefreshToken { get; set; }
+        public string RefreshToken { get; set; } 
 
         public DateTime RefreshTokenExpiryTime { get; set; }
     }
@@ -84,7 +84,7 @@ namespace Infracstructure.Models.UserManagement
         public string FirstName { get; set; }
         [Required, MaxLength(100)]
         public string LastName { get; set; }     
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string City { get; set; }= string.Empty;
         public string State { get; set; } = string.Empty;

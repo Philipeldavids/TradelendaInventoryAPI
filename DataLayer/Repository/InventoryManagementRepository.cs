@@ -25,7 +25,7 @@ namespace DataLayer.Repository
             Category category1 = new Category();
             category1.CategoryName = category.CategoryName;
             category1.CategorySLug = category.CategoryName.ToLower();
-            category1.CreatedOn = DateTime.UtcNow;
+            category1.CreatedOn = DateTime.Now;
             category1.Status = true; 
 
             _context.Categories.Add(category1);

@@ -78,7 +78,7 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterCustomerUserAsync(User user)
         {
-            user.Role = Roles.Customer;
+            
 
             var result = await _userRepository.AddUserAsync(user);
             if (!result)

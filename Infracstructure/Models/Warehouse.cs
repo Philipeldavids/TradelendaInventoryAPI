@@ -14,9 +14,10 @@ namespace Infracstructure.Models
        
         public string ContactPhone { get; set; }
 
-        public Supplier ContactPerson { get; set; }
+
+        public Supplier Supplier { get; set; } = new Supplier();
         
-        public Stock Stock { get; set; }
+        public Stock Stock { get; set; } = new Stock();
 
         public int Quantity { get; set; }
         public DateTime CreatedOn { get; set; }

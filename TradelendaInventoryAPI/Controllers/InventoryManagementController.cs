@@ -214,7 +214,7 @@ namespace TradelendaInventoryAPI.Controllers
         {
             try
             {
-                var products = await _inventoryManagementRepository.GetRecentProducts();
+                var products = await _inventoryManagementRepository.GetExpiredProducts();
                 return Ok(products);
             }
             catch(Exception ex)

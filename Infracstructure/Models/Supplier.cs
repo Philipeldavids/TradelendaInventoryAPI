@@ -14,5 +14,6 @@ namespace Infracstructure.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Country { get; set; }
+        public string ContactPerson { get; set; }
     }
 }

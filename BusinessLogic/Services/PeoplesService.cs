@@ -20,10 +20,12 @@ namespace BusinessLogic.Services
         private readonly IUserService _userService;
         private readonly ITokenService _tokenService;
 
-        public PeoplesService(IPeoplesRepository peoplesRepository, INotificationService notificationService)
+        public PeoplesService(IPeoplesRepository peoplesRepository, INotificationService notificationService, ITokenService tokenService, IUserService userService)
         {
             _peoplesRepository = peoplesRepository;
             _notificationService = notificationService;
+            _tokenService = tokenService;
+            _userService = userService;
         }
 
         public static string GenerateDefaultPassword(int length)

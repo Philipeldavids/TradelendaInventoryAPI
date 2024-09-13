@@ -258,7 +258,7 @@ namespace DataLayer.Repository
         {
             var res = _context.Warehouses
                 .Include(propa => propa.Stock)
-                .Include(p=>p.Supplier).ToList();
+                .Include(p=>p.supplier).ToList();
 
             return new ServiceResponse<List<Warehouse>>()
             {
@@ -267,7 +267,7 @@ namespace DataLayer.Repository
                 Message = "Warehouse list retrieved successfully"
             };
         }
-        [HttpPost]
+       
         public async Task<ServiceResponse<bool>> AddWarehouse(Warehouse warehouse)
         {
             _context.Warehouses.Add(warehouse);
@@ -280,7 +280,7 @@ namespace DataLayer.Repository
             };
 
         }
-        [HttpPut]
+      
         public async Task<ServiceResponse<bool>> EditWarehouse(Warehouse warehouse, string Id)
         {
             var warehous = _context.Warehouses.Where(x => x.WarehouseId == Id)
@@ -290,11 +290,15 @@ namespace DataLayer.Repository
             {
                 warehous.WarehouseName = warehouse.WarehouseName;
                 warehous.ContactPhone = warehouse.ContactPhone;
-                warehous.Supplier.ContactPerson = warehouse.Supplier.ContactPerson;
+                warehous.supplier.ContactPerson = warehouse.supplier.ContactPerson;
                 warehous.CreatedOn = warehouse.CreatedOn;
                 warehous.Quantity = warehouse.Quantity;
                 warehous.Stock = warehouse.Stock;
                 warehous.Status = warehouse.Status;
+                warehous.Address1 = warehouse.Address1;
+                warehous.Address2 = warehouse.Address2;
+                warehous.supplier = warehouse.supplier;
+                warehous.Stock = warehouse.Stock;
                 
 
                 _context.Warehouses.Update(warehous);
@@ -315,7 +319,7 @@ namespace DataLayer.Repository
             };
 
         }
-        [HttpDelete]
+       
         public async Task<ServiceResponse<bool>> DeleteWarehouse(string Id)
         {
             var warehous = _context.Warehouses.Where(x => x.WarehouseId == Id).FirstOrDefault();

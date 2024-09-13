@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TradelendaInventoryAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class PurchaseController : ControllerBase
     {
         private readonly PurchaseService _purchaseService;

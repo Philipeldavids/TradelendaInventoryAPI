@@ -96,8 +96,8 @@ namespace BusinessLogic.Services
             //if (user == null || Dencrypt(user.PasswordHash) != password)
 
             var user = await _userRepository.GetUserByUsernameAsync(username);
-            if (user == null || !_passwordHasher.VerifyPassword(user, password))
 
+            if (user == null || !_passwordHasher.VerifyPassword(user, password))
             {
                 return (false, null, null, null, new[] { "Invalid username or password" });
             }
@@ -106,6 +106,7 @@ namespace BusinessLogic.Services
             var refreshToken = _tokenService.GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
+            user.IsActive = true;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(int.Parse(_configuration["Jwt:RefreshTokenLifetimeDays"]));
             await _userRepository.UpdateUserAsync(user);
 
@@ -162,7 +163,8 @@ namespace BusinessLogic.Services
 
             user.UserName= request.Username;
             user.Email = request.Email;
-            user.Role = Infracstructure.Models.Roles.Admin;
+            
+            
 
             var result = await _userRepository.UpdateUserAsync(user);
             if (!result)

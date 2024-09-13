@@ -11,5 +11,7 @@ namespace BusinessLogic.Interfaces
     {
         Task<bool> AddCustomer(Customer customer);
         Task<bool> AddSupplier(Supplier supplier);
+
+        Task<bool> AddWarehouse(Warehouse warehouse);
     }
 }

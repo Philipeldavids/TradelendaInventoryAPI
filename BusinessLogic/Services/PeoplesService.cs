@@ -4,6 +4,7 @@ using DataLayer.Interfaces;
 using Infracstructure.DTOs.UserManagementDTOs;
 using Infracstructure.Models;
 using Infracstructure.Models.UserManagement;
+using Microsoft.AspNet.Identity;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace BusinessLogic.Services
             user.PasswordHash = GenerateDefaultPassword(12);
             user.UserProfil.PhoneNumber = customer.PhoneNumber;
             user.UserProfil.Address = customer.ShippingAddress;
+            
 
 
             var reg = await _userService.RegisterCustomerUserAsync(user);
@@ -65,17 +67,16 @@ namespace BusinessLogic.Services
             {
                 return false;
             }
+            await _peoplesRepository.AddCustomer(customer);
+
             await _notificationService.SendNotificationAsync(
                    user,
                    user.Email,
                    "New User Created",
                    user => $"New User Created for: {user.Email} with role {user.Role.ToString()} You can log in with the password: {user.PasswordHash}. Please remember to change your password."
                    );
-            var result = await _peoplesRepository.AddCustomer(customer);
-            if (result.Success != true)
-            {
-                return false;
-            }
+            
+            
             return true;
         }
 
@@ -96,18 +97,40 @@ namespace BusinessLogic.Services
             {
                 return false;
             }
+            await _peoplesRepository.AddSupplier(supplier);
+
             await _notificationService.SendNotificationAsync(
                    user,
                    user.Email,
                    "New User Created",
                    user => $"New User Created for: {user.Email} with role {user.Role.ToString()} You can log in with the password: {user.PasswordHash}. Please remember to change your password."
                    );
-            var result = await _peoplesRepository.AddSupplier(supplier);
-            if (result.Success != true)
-            {
-                return false;
-            }
+           
+          
             return true;
+        }
+
+        public async Task<bool> AddWarehouse(Warehouse warehouse)
+        {
+            var result = _peoplesRepository.AddWarehouse(warehouse);
+            {
+                if (result == null)
+                {
+                    return false;
+                }
+
+
+                await _notificationService.SendNotificationAsync(
+                warehouse,
+                        warehouse.supplier.Email,
+                        "New Warehouse Created",
+                        warehouse => $"New Warehouse Created for: {warehouse.supplier.Email} with role WarehouseID: {warehouse.WarehouseId} and Warehouse Name: {warehouse.WarehouseName}"
+                        );
+
+
+                return true;
+
+            }
         }
     }
 }

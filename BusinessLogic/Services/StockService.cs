@@ -22,19 +22,19 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, string Message)> AddNewStockAsync(Stock stock)
         {
-            await _context.Stocks.AddAsync(stock);
+            _context.Stocks.Add(stock);
             await _context.SaveChangesAsync();
             return (true, "Stock added successfully");
         }
 
         public async Task<IEnumerable<Stock>> GetStockListAsync()
         {
-            return await _context.Stocks.Include(s => s.Products).ToListAsync();
+            return _context.Stocks.Include(s => s.Products).ToList();
         }
 
         public async Task<(bool Success, string Message)> EditStockAsync(string stockId, Stock stock)
         {
-            var existingStock = await _context.Stocks.FindAsync(stockId);
+            var existingStock = _context.Stocks.Where(x=>x.StockId == stockId).FirstOrDefault();
             if (existingStock != null)
             {
                 existingStock.Products = stock.Products;
@@ -49,7 +49,7 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, string Message)> DeleteStockAsync(string stockId)
         {
-            var stock = await _context.Stocks.FindAsync(stockId);
+            var stock = _context.Stocks.Where(x => x.StockId == stockId).FirstOrDefault();
             if (stock != null)
             {
                 _context.Stocks.Remove(stock);
@@ -61,14 +61,14 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, string Message)> AddNewStockAdjustmentAsync(StockAdjustment adjustment)
         {
-            await _context.StockAdjustments.AddAsync(adjustment);
+            _context.StockAdjustments.Add(adjustment);
             await _context.SaveChangesAsync();
             return (true, "Stock adjustment added successfully");
         }
 
         public async Task<(bool Success, string Message)> EditStockAdjustmentAsync(string adjustmentId, StockAdjustment adjustment)
         {
-            var existingAdjustment = await _context.StockAdjustments.FindAsync(adjustmentId);
+            var existingAdjustment = _context.StockAdjustments.Where(x=>x.StockAdjustmentId == adjustmentId).FirstOrDefault();
             if (existingAdjustment != null)
             {
                 existingAdjustment.QuantityAdjusted = adjustment.QuantityAdjusted;
@@ -81,7 +81,7 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, string Message)> DeleteStockAdjustmentAsync(string adjustmentId)
         {
-            var adjustment = await _context.StockAdjustments.FindAsync(adjustmentId);
+            var adjustment = _context.StockAdjustments.Where(x=>x.StockAdjustmentId == adjustmentId).FirstOrDefault();
             if (adjustment != null)
             {
                 _context.StockAdjustments.Remove(adjustment);
@@ -93,19 +93,19 @@ namespace BusinessLogic.Services
 
         public async Task<IEnumerable<StockAdjustment>> GetStockAdjustmentListAsync()
         {
-            return await _context.StockAdjustments.ToListAsync();
+            return _context.StockAdjustments.ToList();
         }
 
         public async Task<(bool Success, string Message)> StockTransferAsync(StockTransfer transfer)
         {
-            await _context.StockTransfers.AddAsync(transfer);
+            _context.StockTransfers.Add(transfer);
             await _context.SaveChangesAsync();
             return (true, "Stock transfer completed successfully");
         }
 
         public async Task<IEnumerable<StockTransfer>> GetStockTransferListAsync()
         {
-            return await _context.StockTransfers.Include(st => st.FromWarehouse).Include(st => st.ToWarehouse).ToListAsync();
+            return _context.StockTransfers.Include(st => st.FromWarehouse).Include(st => st.ToWarehouse).ToList();
         }
     }
 

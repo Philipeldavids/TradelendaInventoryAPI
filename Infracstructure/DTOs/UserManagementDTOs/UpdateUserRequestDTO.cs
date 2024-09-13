@@ -15,8 +15,7 @@ namespace Infracstructure.DTOs.UserManagementDTOs
         [EmailAddress, MaxLength(100)]
         public string Email { get; set; }
 
-        [MinLength(6), MaxLength(100)]
-        public string Password { get; set; }
+        [MinLength(6), MaxLength(100)]       
 
         public List<Guid> RoleIds { get; set; }
 

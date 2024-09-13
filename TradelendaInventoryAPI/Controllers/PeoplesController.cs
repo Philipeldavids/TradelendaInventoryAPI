@@ -125,20 +125,12 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> AddWarehouse([FromBody]CreateWarehouseDTO warehouse)
+        public async Task<ActionResult> AddWarehouse([FromBody]Warehouse warehouse)
         {
             try
             {
-                Warehouse warehouse1 = new Warehouse();
-
-                warehouse1.ContactPhone = warehouse.WorkPhone;
-                warehouse1.Supplier.ContactPerson = warehouse.ContactPerson;
-                warehouse1.Supplier.Country = warehouse.Address1 + " | " +warehouse.Address2 + " " + warehouse.City + ", "+ warehouse.State + ", " + warehouse.ZipCode+" "+ warehouse.Country;
-                warehouse1.WarehouseName = warehouse.WarehouseName;
-                warehouse1.Supplier.PhoneNumber = warehouse.PhoneNumber;
-                warehouse1.Supplier.Email = warehouse.Email;
-
-                var res = await _peoplesRepository.AddWarehouse(warehouse1);
+                
+                var res = await _peoplesService.AddWarehouse(warehouse);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -177,19 +169,12 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> AddCustomer([FromBody]CustomerRegisterDTO customer)
+        public async Task<ActionResult> AddCustomer([FromBody]Customer customer)
         {
             try
             {
-                Customer customr = new Customer();
-                customr.Email = customer.Email;
-                customr.PhoneNumber = customer.PhoneNumber;
-                customr.FullName = customer.Name;
-                customr.ShippingAddress = customer.Address + ", " +customer.City+ ", " + customer.Country;
-                customr.Description = customer.Description;
-                
-
-                var res = await _peoplesService.AddCustomer(customr);
+     
+                var res = await _peoplesService.AddCustomer(customer);
                 return Ok(res);
             }
             catch (Exception ex)

@@ -197,12 +197,12 @@ namespace BusinessLogic.Services
 
         public async Task<IEnumerable<Purchase>> GetPurchaseListAsync()
         {
-            return await _context.Purchases.ToListAsync();
+            return _context.Purchases.ToList();
         }
 
         public async Task<(bool Success, string Message)> DeletePurchaseAsync(int purchaseId)
         {
-            var purchase = await _context.Purchases.FindAsync(purchaseId);
+            var purchase = _context.Purchases.Find(purchaseId);
             if (purchase != null)
             {
                 _context.Purchases.Remove(purchase);
@@ -214,7 +214,7 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, string Message)> EditPurchaseAsync(int purchaseId, Purchase purchaseDto)
         {
-            var purchase = await _context.Purchases.FindAsync(purchaseId);
+            var purchase = _context.Purchases.Find(purchaseId);
             if (purchase != null)
             {
                 purchase.Supplier = _context.Suppliers.Find(purchaseDto.Supplier.SupplierID);
@@ -254,7 +254,7 @@ namespace BusinessLogic.Services
                     {
                         var purchase = new Purchase
                         {
-                            Supplier = await _context.Suppliers.FindAsync(csvReader["SupplierId"]),
+                            Supplier = _context.Suppliers.Find(csvReader["SupplierId"]),
                             CreatedBy = DateTime.Parse(csvReader["Date"]).ToString(),
                             Reference = csvReader["ReferenceNo"],
                             

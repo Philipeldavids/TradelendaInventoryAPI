@@ -67,7 +67,7 @@ namespace DataLayer
           
             modelBuilder.Entity<Stock>().HasKey(p=> p.StockId);
             modelBuilder.Entity<Warehouse>().HasOne(p => p.Stock);
-            modelBuilder.Entity<Warehouse>().HasOne(p=>p.Supplier);
+            modelBuilder.Entity<Warehouse>().HasOne(p=>p.supplier);
 
             modelBuilder.Entity<Payment>().HasKey(p => p.Reference);    
             modelBuilder.Entity<Sale>().HasKey(p => p.Reference);

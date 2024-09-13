@@ -35,7 +35,7 @@ namespace DataLayer.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return _context.Users.ToList();
         }
 
         public async Task<bool> AddUserAsync(User user)

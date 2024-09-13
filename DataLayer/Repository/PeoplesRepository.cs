@@ -34,7 +34,7 @@ namespace DataLayer.Repository
         public async Task<ServiceResponse<bool>> AddStore(Store store)
         {
             _context.Stores.Add(store);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return new ServiceResponse<bool>() {  
                 Data = true,
                 Success = true,
@@ -55,7 +55,7 @@ namespace DataLayer.Repository
                 stor.Status = store.Status;
 
                 _context.Stores.Update(stor);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return new ServiceResponse<bool>()
                 {
                     Data = true,
@@ -78,7 +78,7 @@ namespace DataLayer.Repository
             if(stor != null )
             {
                 _context.Stores.Remove(stor);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return new ServiceResponse<bool>
                 {
@@ -110,7 +110,7 @@ namespace DataLayer.Repository
         public async Task<ServiceResponse<bool>> AddCustomer(Customer customer)
         {
             _context.Customers.Add(customer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return new ServiceResponse<bool>()
             {
                 Data = true,
@@ -158,7 +158,7 @@ namespace DataLayer.Repository
             if (customr != null)
             {
                 _context.Customers.Remove(customr);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return new ServiceResponse<bool>()
                 {
                     Data = true,
@@ -189,7 +189,7 @@ namespace DataLayer.Repository
         public async Task<ServiceResponse<bool>> AddSupplier(Supplier supplier)
         {
             _context.Suppliers.Add(supplier);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return new ServiceResponse<bool>()
             {
                 Data = true,
@@ -212,7 +212,7 @@ namespace DataLayer.Repository
                 supplir.Code = supplier.Code;         
       
                 _context.Suppliers.Update(supplir);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return new ServiceResponse<bool>()
                 {
@@ -237,7 +237,7 @@ namespace DataLayer.Repository
             if (supplr != null)
             {
                 _context.Suppliers.Remove(supplr);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return new ServiceResponse<bool>()
                 {
                     Data = true,
@@ -290,7 +290,7 @@ namespace DataLayer.Repository
             {
                 warehous.WarehouseName = warehouse.WarehouseName;
                 warehous.ContactPhone = warehouse.ContactPhone;
-                warehous.supplier.ContactPerson = warehouse.supplier.ContactPerson;
+                warehous.ContactPerson = warehouse.ContactPerson;
                 warehous.CreatedOn = warehouse.CreatedOn;
                 warehous.Quantity = warehouse.Quantity;
                 warehous.Stock = warehouse.Stock;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace Infracstructure.Models
     {
         public string WarehouseId { get; set; }
         public string WarehouseName { get; set; }
+        [Required]
+        public string ContactPerson { get; set; }
 
         public string? ContactPhone { get; set; }
 

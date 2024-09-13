@@ -40,11 +40,11 @@ namespace TradelendaInventoryAPI.Controllers
             
         }
         [HttpGet]
-        public ActionResult GetStores()
+        public async Task<ActionResult> GetStores()
         {
             try
             {
-                var res = _peoplesRepository.GetStore();
+                var res = await _peoplesRepository.GetStore();
                 return Ok(res);
             }
             catch (Exception ex)
@@ -54,11 +54,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpDelete]
-        public ActionResult DeleteStores(string Id)
+        public async Task<ActionResult> DeleteStores(string Id)
         {
             try
             {
-                var res = _peoplesRepository.DeleteStores(Id);
+                var res = await _peoplesRepository.DeleteStores(Id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -68,11 +68,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPut]
-        public ActionResult EditStores(Store store, string Id)
+        public async Task<ActionResult> EditStores(Store store, string Id)
         {
             try
             {
-                var res = _peoplesRepository.EditStore(store, Id);
+                var res = await _peoplesRepository.EditStore(store, Id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -198,11 +198,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GetSupplier()
+        public async Task<ActionResult> GetSupplier()
         {
             try
             {
-                var res = _peoplesRepository.GetSupplier();
+                var res =await _peoplesRepository.GetSupplier();
                 return Ok(res);
             }
             catch (Exception ex)
@@ -212,11 +212,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddSupplier(Supplier supplier)
+        public async Task<ActionResult> AddSupplier([FromBody]Supplier supplier)
         {
             try
             {
-                var res = _peoplesService.AddSupplier(supplier);
+                var res = await _peoplesService.AddSupplier(supplier);
                 return Ok(res);
             }
             catch (Exception ex)

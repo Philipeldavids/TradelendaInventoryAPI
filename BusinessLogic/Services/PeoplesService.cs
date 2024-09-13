@@ -5,6 +5,7 @@ using Infracstructure.DTOs.UserManagementDTOs;
 using Infracstructure.Models;
 using Infracstructure.Models.UserManagement;
 using Microsoft.AspNet.Identity;
+using Microsoft.Identity.Client;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -87,17 +88,24 @@ namespace BusinessLogic.Services
             var LastName = supplier.Name.Split(" ").Contains(" ") ? supplier.Name.Split(" ")[1] : "";
             user.UserProfil.FirstName = FirstName;
             user.UserProfil.LastName = LastName;
+            user.UserProfil.UserId = user.UserId;
+            user.RefreshToken = _tokenService.GenerateRefreshToken();
             user.Email = supplier.Email;
+            user.UserName = supplier.Email;
             user.Role = Roles.ShopOwner;
             user.PasswordHash = GenerateDefaultPassword(12);
             user.UserProfil.PhoneNumber = supplier.PhoneNumber;
-            user.UserProfil.Address = supplier.Country;
-            var reg = await _userService.RegisterCustomerUserAsync(user);
+            user.UserProfil.Address = supplier.Address +" "+ supplier.City+", "+supplier.Country;
+            var reg = await _userService.RegisterStoreUserAsync(user);
             if (reg.Success != true)
             {
                 return false;
             }
-            await _peoplesRepository.AddSupplier(supplier);
+           var resut = await _peoplesRepository.AddSupplier(supplier);
+            if(resut.Success != true)
+            {
+                return false;
+            }
 
             await _notificationService.SendNotificationAsync(
                    user,
@@ -131,6 +139,9 @@ namespace BusinessLogic.Services
                 return true;
 
             }
+
+           
         }
+       
     }
 }

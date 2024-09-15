@@ -70,6 +70,7 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ISalesReturnService, SalesReturnService>();
 builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 builder.Services.AddScoped<IStockService, StockService>();
+builder.Services.AddScoped<IBarCodeService, BarcodeService>();
 builder.Services.AddSignalR();
 
 

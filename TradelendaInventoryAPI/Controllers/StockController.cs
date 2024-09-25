@@ -32,7 +32,11 @@ namespace TradelendaInventoryAPI.Controllers
         public async Task<IActionResult> GetStockList()
         {
             var stockList = await _stockService.GetStockListAsync();
-            return Ok(stockList);
+            if(stockList != null)
+            {
+                return Ok(stockList);
+            }
+            return BadRequest();
         }
 
         [HttpPut("edit-stock/{stockId}")]

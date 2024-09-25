@@ -25,7 +25,8 @@ namespace Infracstructure.DTOs.UserManagementDTOs
         [Required, MinLength(6), MaxLength(100)]
         public string ConfirmPassword {  get; set; }
         [Required]
-        public bool IsAgreement { get; set; }
+        public bool? IsAgreement { get; set; }
+     
 
 
     }

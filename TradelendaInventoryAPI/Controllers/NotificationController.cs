@@ -23,12 +23,12 @@ namespace TradelendaInventoryAPI.Controllers
             return Ok("Notification sent successfully");
         }
 
-        [HttpPost("new-stock-added")]
-        public async Task<IActionResult> AlertNewStockAsync([FromBody] NewStockNotificationRequest request)
-        {
-            await _notificationService.AlertNewStockAsync(request.Stock, request.RecipientEmail);
-            return Ok("Notification sent successfully");
-        }
+        //[HttpPost("new-stock-added")]
+        //public async Task<IActionResult> AlertNewStockAsync([FromBody] NewStockNotificationRequest request)
+        //{
+        //    await _notificationService.AlertNewStockAsync(request.Stock, request.RecipientEmail);
+        //    return Ok("Notification sent successfully");
+        //}
 
         [HttpPost("new-store-created")]
         public async Task<IActionResult> AlertNewStoreCreatedAsync([FromBody] NewStoreNotificationRequest request)
@@ -63,16 +63,16 @@ namespace TradelendaInventoryAPI.Controllers
         }
 
         [HttpPost("new-stock-added2")]
-        public async Task<IActionResult> AlertNewStockAddedAsync2([FromBody] NewStockNotificationRequest request)
-        {
-            await _notificationService.SendNotificationAsync(
-                request.Stock,
-                request.RecipientEmail,
-                "New stock added",
-                stock => $"Product name: {stock.Products}, Quantity: {stock.Quantity}"
-            );
-            return Ok("Stock notification sent successfully");
-        }
+        //public async Task<IActionResult> AlertNewStockAddedAsync2([FromBody] NewStockNotificationRequest request)
+        //{
+        //    await _notificationService.SendNotificationAsync(
+        //        request.Stock,
+        //        request.RecipientEmail,
+        //        "New stock added",
+        //        stock => $"Product name: {stock.Product}, Quantity: {stock.Quantity}"
+        //    );
+        //    return Ok("Stock notification sent successfully");
+        //}
 
         [HttpPost("new-store-created2")]
         public async Task<IActionResult> AlertNewStoreCreatedAsync2([FromBody] NewStoreNotificationRequest request)

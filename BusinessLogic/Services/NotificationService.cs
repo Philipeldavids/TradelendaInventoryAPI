@@ -37,20 +37,20 @@ namespace BusinessLogic.Services
             await _hubContext.Clients.All.SendAsync("ReceiveNotification", notificationMessage);
         }
 
-        public async Task AlertNewStockAsync(Stock stock, string recipientEmail)
-        {
-            var mailRequestDto = new MailRequestDto
-            {
-                ToEmail = recipientEmail,
-                Subject = "New stock added",
-                Message = $"Product name: {stock.Products}, Quantity: {stock.Quantity}"
-            };
-            await _emailService.SendEmailAsync(mailRequestDto);
+        //public async Task AlertNewStockAsync(Stock stock, string recipientEmail)
+        //{
+        //    var mailRequestDto = new MailRequestDto
+        //    {
+        //        ToEmail = recipientEmail,
+        //        Subject = "New stock added",
+        //        Message = $"Product name: {stock.Product}, Quantity: {stock.Quantity}"
+        //    };
+        //    await _emailService.SendEmailAsync(mailRequestDto);
 
             
-            string notificationMessage = $"New stock for '{stock.Products}' (Quantity: {stock.Quantity}) has been added!";
-            await _hubContext.Clients.All.SendAsync("ReceiveNotification", notificationMessage);
-        }
+        //    string notificationMessage = $"New stock for '{stock.Product}' (Quantity: {stock.Quantity}) has been added!";
+        //    await _hubContext.Clients.All.SendAsync("ReceiveNotification", notificationMessage);
+        //}
 
         public async Task AlertNewStoreCreatedAsync(Store store, string recipientEmail)
         {

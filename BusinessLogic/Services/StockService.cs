@@ -29,7 +29,8 @@ namespace BusinessLogic.Services
 
         public async Task<IEnumerable<Stock>> GetStockListAsync()
         {
-            return _context.Stocks.Include(s => s.Products).ToList();
+            return _context.Stocks.ToList();
+
         }
 
         public async Task<(bool Success, string Message)> EditStockAsync(string stockId, Stock stock)
@@ -37,7 +38,7 @@ namespace BusinessLogic.Services
             var existingStock = _context.Stocks.Where(x=>x.StockId == stockId).FirstOrDefault();
             if (existingStock != null)
             {
-                existingStock.Products = stock.Products;
+               
                 existingStock.Quantity = stock.Quantity;
                 existingStock.Person = stock.Person;
                 existingStock.WarehouseID = stock.WarehouseID;

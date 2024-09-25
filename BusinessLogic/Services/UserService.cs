@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Interfaces;
+﻿using Azure.Core;
+using BusinessLogic.Interfaces;
 using DataLayer;
 using DataLayer.Helper;
 using DataLayer.Interfaces;
@@ -49,6 +50,7 @@ namespace BusinessLogic.Services
             user.UserProfil.FirstName = FirstName;
             user.UserProfil.LastName = LastName;
             user.UserProfil.PhoneNumber = request.PhoneNumber;
+            user.Description = "";
             user.RefreshToken = _tokenService.GenerateRefreshToken();
             
 
@@ -63,22 +65,43 @@ namespace BusinessLogic.Services
             return (true, user, null);
         }
 
-        public async Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterStoreUserAsync(User usr)
-        {       
-                     
+        public async Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterStoreUserAsync(CreateUserRequestDTO request)
+        {
+            var user = new User();
 
-            var result = await _userRepository.AddUserAsync(usr);
+            user.UserName = request.Email;
+            user.Email = request.Email;
+            user.Role = Infracstructure.Models.Roles.ShopOwner;
+            var FirstName = request.Name.Split("").Contains(" ") ? request.Name.Split(' ')[0] : request.Name;
+            var LastName = request.Name.Split(" ").Contains(" ") ? request.Name.Split(' ')[1] : "";
+            user.UserProfil.FirstName = FirstName;
+            user.UserProfil.LastName = LastName;
+            user.UserProfil.PhoneNumber = request.PhoneNumber;
+            user.RefreshToken = _tokenService.GenerateRefreshToken();
+
+            var result = await _userRepository.AddUserAsync(user);
             if (!result)
             {
                 return (false, null, new[] { "User registration failed" });
             }
 
-            return (true, usr, null);
+            return (true, user, null);
         }
 
-        public async Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterCustomerUserAsync(User user)
+        public async Task<(bool Success, User User, IEnumerable<string> Errors)> RegisterCustomerUserAsync(CreateUserRequestDTO request)
         {
-            
+            var user = new User();
+
+            user.UserName = request.Email;
+            user.Email = request.Email;
+            user.Role = Infracstructure.Models.Roles.Customer;
+            var FirstName = request.Name.Split("").Contains(" ") ? request.Name.Split(' ')[0] : request.Name;
+            var LastName = request.Name.Split(" ").Contains(" ") ? request.Name.Split(' ')[1] : "";
+            user.UserProfil.FirstName = FirstName;
+            user.UserProfil.LastName = LastName;
+            user.UserProfil.PhoneNumber = request.PhoneNumber;
+            user.RefreshToken = _tokenService.GenerateRefreshToken();
+
 
             var result = await _userRepository.AddUserAsync(user);
             if (!result)

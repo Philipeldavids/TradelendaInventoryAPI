@@ -20,6 +20,12 @@ namespace DataLayer.Repository
             _context = context;
         }
 
+        public async Task<Store> GetStoreByCode(int code)
+        {
+            var res = _context.Stores.Where(x => x.SupplierID == code).FirstOrDefault();
+
+            return res;
+        }
        public async Task<ServiceResponse<List<Store>>> GetStore()
         {
           var res = _context.Stores.ToList();
@@ -49,7 +55,7 @@ namespace DataLayer.Repository
             if(stor != null)
             {
                 stor.StoreName = store.StoreName;
-                stor.UserName = store.UserName;
+                stor.ContactPerson = store.ContactPerson;
                 stor.PhoneNumber = store.PhoneNumber;
                 stor.Email = store.Email;
                 stor.Status = store.Status;

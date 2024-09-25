@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace DataLayer.Repository
     public class InventoryManagementRepository : IInventoryManagementRepository
     {
         private readonly ApplicationDbContext _context;
+        
         public InventoryManagementRepository(ApplicationDbContext context) 
         { 
             _context = context;
@@ -94,6 +96,7 @@ namespace DataLayer.Repository
         public async Task<bool> AddProducts(Product product)
         {
             var category = _context.Categories.Where(x=>x.CategoryId == product.CategoryId).FirstOrDefault();
+           
 
             if(category == null)
             {

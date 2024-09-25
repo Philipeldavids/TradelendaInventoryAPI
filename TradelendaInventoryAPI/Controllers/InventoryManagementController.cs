@@ -151,7 +151,7 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost("AddProduct")]
-        public async Task<ActionResult> AddProduct(Product product)
+        public async Task<ActionResult> AddProduct([FromBody]Product product)
         {
             try
             {

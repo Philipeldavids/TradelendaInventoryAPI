@@ -41,7 +41,7 @@ namespace DataLayer.Repositories
         public async Task<bool> AddUserAsync(User user)
         {
             _context.Users.Add(user);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync() > 0;   
         }
         
         public async Task<bool> UpdateUserAsync(User user)

@@ -5,7 +5,7 @@
 namespace DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class newadd1 : Migration
+    public partial class stockedit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,8 +26,7 @@ namespace DataLayer.Migrations
                 name: "ProductId",
                 table: "Stocks",
                 type: "nvarchar(450)",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stocks_ProductId",
@@ -39,8 +38,7 @@ namespace DataLayer.Migrations
                 table: "Stocks",
                 column: "ProductId",
                 principalTable: "Products",
-                principalColumn: "ProductId",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "ProductId");
         }
 
         /// <inheritdoc />

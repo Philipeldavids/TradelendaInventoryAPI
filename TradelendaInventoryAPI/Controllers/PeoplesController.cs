@@ -11,7 +11,7 @@ namespace TradelendaInventoryAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-   
+
     public class PeoplesController : ControllerBase
     {
         private readonly IPeoplesRepository _peoplesRepository;
@@ -23,24 +23,24 @@ namespace TradelendaInventoryAPI.Controllers
             _peoplesRepository = peoplesRepository;
         }
 
-        
+
         [HttpPost]
-        public ActionResult AddStores(Store store)
+        public async Task<ActionResult> AddStore(Store store)
         {
             try
             {
-                var res = _peoplesRepository.AddStore(store);
+                var res = await _peoplesService.AddStore(store);
                 return Ok(res);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
 
             }
-            
+
         }
         [HttpGet]
-        public async Task<ActionResult> GetStores()
+        public async Task<ActionResult> GetStore()
         {
             try
             {
@@ -109,7 +109,7 @@ namespace TradelendaInventoryAPI.Controllers
 
             }
         }
-        
+
         [HttpPut]
         public async Task<ActionResult> EditWarehouse(Warehouse warehouse, string Id)
         {
@@ -125,11 +125,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> AddWarehouse([FromBody]Warehouse warehouse)
+        public async Task<ActionResult> AddWarehouse([FromBody] Warehouse warehouse)
         {
             try
             {
-                
+
                 var res = await _peoplesService.AddWarehouse(warehouse);
                 return Ok(res);
             }
@@ -140,7 +140,7 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpGet]
-       
+
         public async Task<ActionResult> GetCustomer()
         {
             try
@@ -154,12 +154,12 @@ namespace TradelendaInventoryAPI.Controllers
 
             }
         }
-        [HttpDelete]        
-        public ActionResult DeleteCustomer(string Id)
+        [HttpDelete("{Id}")]        
+        public async Task<ActionResult> DeleteCustomer(string Id)
         {
             try
             {
-                var res = _peoplesRepository.DeleteWarehouse(Id);
+                var res =await  _peoplesRepository.DeleteCustomer(Id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -168,6 +168,7 @@ namespace TradelendaInventoryAPI.Controllers
 
             }
         }
+
         [HttpPost]
         public async Task<ActionResult> AddCustomer([FromBody]Customer customer)
         {
@@ -184,11 +185,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPut]
-        public ActionResult EditCustomer(Customer customer, string Id)
+        public async Task<ActionResult> EditCustomer(Customer customer, string Id)
         {
             try
             {
-                var res = _peoplesRepository.EditCustomer(customer, Id);
+                var res = await _peoplesRepository.EditCustomer(customer, Id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -202,7 +203,7 @@ namespace TradelendaInventoryAPI.Controllers
         {
             try
             {
-                var res =await _peoplesRepository.GetSupplier();
+                var res = await _peoplesRepository.GetSupplier();
                 return Ok(res);
             }
             catch (Exception ex)
@@ -226,11 +227,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpDelete]
-        public ActionResult DeleteSupplier(string Id)
+        public async Task<ActionResult> DeleteSupplier(string Id)
         {
             try
             {
-                var res = _peoplesRepository.DeleteSupplier(Id);
+                var res =await _peoplesRepository.DeleteSupplier(Id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -240,11 +241,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPut]
-        public ActionResult EditSupplier(Supplier supplier, string Id)
+        public async Task<ActionResult> EditSupplier(Supplier supplier, string Id)
         {
             try
             {
-                var res = _peoplesRepository.EditSupplier(supplier, Id);
+                var res = await _peoplesRepository.EditSupplier(supplier, Id);
                 return Ok(res);
             }
             catch (Exception ex)

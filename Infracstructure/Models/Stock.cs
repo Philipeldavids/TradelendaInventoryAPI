@@ -10,8 +10,7 @@ namespace Infracstructure.Models
     public class Stock
     {
         public string StockId { get; set; } = Guid.NewGuid().ToString();
-        public string WarehouseID { get; set; }
-        public List<Product> Products { get; set; } = new List<Product>();
+        public string WarehouseID { get; set; }       
 
         public DateTime DateAdded { get; set; }
         

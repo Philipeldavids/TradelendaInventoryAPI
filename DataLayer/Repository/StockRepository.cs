@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repository
 {
-    internal class StockRepository
+    public class StockRepository
     {
     }
 }

@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240914081931_storesedit")]
+    partial class storesedit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,6 +190,9 @@ namespace DataLayer.Migrations
                     b.Property<string>("SaleReference")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("StockId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Store")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -209,6 +215,8 @@ namespace DataLayer.Migrations
                     b.HasIndex("PurchaseId");
 
                     b.HasIndex("SaleReference");
+
+                    b.HasIndex("StockId");
 
                     b.ToTable("Products");
                 });
@@ -541,10 +549,6 @@ namespace DataLayer.Migrations
                     b.Property<string>("StoreId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ContactPerson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -560,8 +564,9 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SupplierID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StoreId");
 
@@ -620,10 +625,6 @@ namespace DataLayer.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -954,6 +955,10 @@ namespace DataLayer.Migrations
                         .WithMany("Products")
                         .HasForeignKey("SaleReference");
 
+                    b.HasOne("Infracstructure.Models.Stock", null)
+                        .WithMany("Products")
+                        .HasForeignKey("StockId");
+
                     b.Navigation("Category");
                 });
 
@@ -1131,6 +1136,11 @@ namespace DataLayer.Migrations
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Sale", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Infracstructure.Models.Stock", b =>
                 {
                     b.Navigation("Products");
                 });

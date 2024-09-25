@@ -123,7 +123,7 @@ namespace TradelendaInventoryAPI.Controllers
         }
 
         [HttpGet("GetUsers")]
-        [Authorize(Roles = "Admin,Manager")]
+       // [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();

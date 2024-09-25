@@ -59,6 +59,7 @@ namespace Infracstructure.Models.UserManagement
         [Required]
         public string PasswordHash { get; set; }
         public Roles Role { get; set; }
+        public string Description { get; set; }
 
 
         [AllowNull]

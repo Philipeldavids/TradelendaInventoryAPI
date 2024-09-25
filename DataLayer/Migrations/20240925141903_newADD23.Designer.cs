@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240925141903_newADD23")]
+    partial class newADD23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -541,18 +544,6 @@ namespace DataLayer.Migrations
                     b.Property<string>("StoreId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ContactPerson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -560,10 +551,12 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SupplierID")
-                        .HasColumnType("int");
+                    b.Property<string>("SupplierID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("StoreId");
+
+                    b.HasIndex("SupplierID");
 
                     b.ToTable("Stores");
                 });
@@ -1042,6 +1035,15 @@ namespace DataLayer.Migrations
                     b.Navigation("FromWarehouse");
 
                     b.Navigation("ToWarehouse");
+                });
+
+            modelBuilder.Entity("Infracstructure.Models.Store", b =>
+                {
+                    b.HasOne("Infracstructure.Models.Supplier", "supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierID");
+
+                    b.Navigation("supplier");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.UserManagement.UserProfile", b =>

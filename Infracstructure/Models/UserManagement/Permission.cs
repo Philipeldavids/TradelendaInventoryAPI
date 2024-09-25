@@ -17,7 +17,7 @@ namespace Infracstructure.Models.UserManagement
         [MaxLength(200)]
         public string Description { get; set; }
 
-        public Role Roles { get; set; }
+        public Roles Roles { get; set; }
     }
 
 

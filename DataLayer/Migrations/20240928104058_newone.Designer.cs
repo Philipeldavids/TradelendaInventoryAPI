@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240928104058_newone")]
+    partial class newone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,18 +159,22 @@ namespace DataLayer.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Barcode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BrandId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExpiredDate")
@@ -183,9 +190,11 @@ namespace DataLayer.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ProductDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
@@ -199,24 +208,25 @@ namespace DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SKU")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SaleReference")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("StockId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Store")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Unit")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("UnitCost")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Warehouse")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductId");
@@ -228,8 +238,6 @@ namespace DataLayer.Migrations
                     b.HasIndex("PurchaseId");
 
                     b.HasIndex("SaleReference");
-
-                    b.HasIndex("StockId");
 
                     b.ToTable("Products");
                 });
@@ -313,31 +321,6 @@ namespace DataLayer.Migrations
                         .IsUnique();
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.PurchaseReport", b =>
-                {
-                    b.Property<string>("PurcahseReportId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("InstockQty")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("PurchaseAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("PurchaseQuatity")
-                        .HasColumnType("int");
-
-                    b.HasKey("PurcahseReportId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("PurchaseReports");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseReturn", b =>
@@ -450,31 +433,6 @@ namespace DataLayer.Migrations
                     b.ToTable("Sales");
                 });
 
-            modelBuilder.Entity("Infracstructure.Models.SalesReport", b =>
-                {
-                    b.Property<string>("SalesReportId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("InstockQty")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("SoldAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SoldQty")
-                        .HasColumnType("int");
-
-                    b.HasKey("SalesReportId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("SalesReports");
-                });
-
             modelBuilder.Entity("Infracstructure.Models.SalesReturn", b =>
                 {
                     b.Property<string>("Reference")
@@ -534,9 +492,11 @@ namespace DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Person")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Quantity")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WarehouseID")
@@ -659,9 +619,11 @@ namespace DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -1027,11 +989,15 @@ namespace DataLayer.Migrations
                 {
                     b.HasOne("Infracstructure.Models.Enums.Brand", "Brand")
                         .WithMany()
-                        .HasForeignKey("BrandId");
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Infracstructure.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Infracstructure.Models.Purchase", null)
                         .WithMany("Products")
@@ -1040,10 +1006,6 @@ namespace DataLayer.Migrations
                     b.HasOne("Infracstructure.Models.Sale", null)
                         .WithMany("Products")
                         .HasForeignKey("SaleReference");
-
-                    b.HasOne("Infracstructure.Models.Stock", null)
-                        .WithMany("Products")
-                        .HasForeignKey("StockId");
 
                     b.Navigation("Brand");
 
@@ -1066,17 +1028,6 @@ namespace DataLayer.Migrations
                         .HasForeignKey("Infracstructure.Models.PurchaseOrder", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.PurchaseReport", b =>
-                {
-                    b.HasOne("Infracstructure.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseReturn", b =>
@@ -1103,17 +1054,6 @@ namespace DataLayer.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.SalesReport", b =>
-                {
-                    b.HasOne("Infracstructure.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.SalesReturn", b =>
@@ -1251,11 +1191,6 @@ namespace DataLayer.Migrations
                 });
 
             modelBuilder.Entity("Infracstructure.Models.Sale", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Infracstructure.Models.Stock", b =>
                 {
                     b.Navigation("Products");
                 });

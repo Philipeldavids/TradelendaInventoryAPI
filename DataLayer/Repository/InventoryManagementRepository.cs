@@ -2,6 +2,7 @@
 using Infracstructure;
 using Infracstructure.Models;
 using Infracstructure.Models.DTO;
+using Infracstructure.Models.Enums;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,57 @@ namespace DataLayer.Repository
             _context = context;
         }
 
+        public async Task<List<Brand>> GetBrand()
+        {
+            var res = _context.Brand.ToList();
+            return res;
+        }
+
+        public async Task<bool> DeleteBrand(string id)
+        {
+            var res = _context.Brand.Where(x => x.BrandId == id).FirstOrDefault();
+            _context.Brand.Remove(res);
+            if (_context.SaveChanges() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> EditBrand(string Id, Brand brand)
+        {
+            var res = _context.Brand.Where(x => x.BrandId == Id).FirstOrDefault();
+
+            res.BrandName = brand.BrandName;
+            res.Status = brand.Status;
+            res.Logo = brand.Logo;
+            res.CreatedOn = brand.CreatedOn;
+
+            _context.Brand.Update(res);
+            if (_context.SaveChanges() > 0)
+            {
+                return true;
+            }
+            return false;
+
+        }
+        public async Task<bool> AddBrand(BrandDTO brand)
+        {
+            Brand brand1 = new Brand();
+            brand1.BrandName = brand.BrandName;
+            brand1.CreatedOn = DateTime.Now;
+            brand1.Logo = brand.Logo;
+            brand1.Status = brand.Status;
+
+            _context.Brand.Add(brand1);
+
+            if (_context.SaveChanges() > 0)
+            {
+                return true;
+            };
+            return false;
+
+        }
         public async Task<bool> AddCategory(CategoryDTO category)
         {
             Category category1 = new Category();
@@ -82,7 +134,9 @@ namespace DataLayer.Repository
         {
 
             var products = _context.Products
-                .Include(x => x.Category).AsQueryable();
+                .Include(x => x.Category)
+                .Include(x=>x.Brand)
+                .ToList();
             return products;
             
         }
@@ -95,16 +149,7 @@ namespace DataLayer.Repository
         }
         public async Task<bool> AddProducts(Product product)
         {
-            var category = _context.Categories.Where(x=>x.CategoryId == product.CategoryId).FirstOrDefault();
-           
-
-            if(category == null)
-            {
-                category = new Category { CategoryId = Guid.NewGuid().ToString(), CategoryName = "New Category", CategorySLug = "new category" };
-                _context.Categories.Add(category);
-                _context.SaveChanges(); // Save the new category
-            }
-            product.Category = category;
+                        
             _context.Products.Add(product);
             _context.SaveChanges();
             return true;
@@ -118,7 +163,7 @@ namespace DataLayer.Repository
                 product.ProductName = produt.ProductName;
                 product.ProductDescription = produt.ProductDescription;
                 product.Barcode = produt.Barcode;
-                product.Brand = produt.Brand;
+                //product.Brand = produt.Brand;
                 product.Category = produt.Category;
                 product.CategoryId = produt.CategoryId;
                 product.CreatedBy = produt.CreatedBy;

@@ -13,10 +13,12 @@ namespace Infracstructure.Models
         public string WarehouseID { get; set; }       
 
         public DateTime DateAdded { get; set; }
-        
-        public string Person { get; set; }
 
-        public string Quantity { get; set; }        
+        public List<Product>? Products { get; set; } = new List<Product>();
+        
+        public string? Person { get; set; }
+
+        public string? Quantity { get; set; }        
        
 
     }

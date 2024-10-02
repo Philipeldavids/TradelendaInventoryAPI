@@ -23,13 +23,14 @@ namespace BusinessLogic.Services
         private readonly INotificationService _notification;
         private readonly IPeoplesRepository _peoplerepo;
         private readonly IUserService _userService;
-        public InventoryManagementService(IInventoryManagementRepository inventoryManagementRepository, 
-            INotificationService notification, IPeoplesRepository peoplerepo, IUserService userService)         
+
+        public InventoryManagementService(IInventoryManagementRepository inventoryManagementRepository,
+            INotificationService notification, IPeoplesRepository peoplerepo, IUserService userService)
         {
             _inventoryManagementRepository = inventoryManagementRepository;
             _notification = notification;
             _peoplerepo = peoplerepo;
-            _userService = userService; 
+            _userService = userService;
         }
 
         public async Task<ServiceResponse<PaginationModel<IEnumerable<Product>>>> GetProducts(int pageSize, int pageNumber)
@@ -70,18 +71,39 @@ namespace BusinessLogic.Services
             };
         }
 
-        public async Task<ServiceResponse<bool>> AddProducts(Product product)
+        public async Task<ServiceResponse<bool>> AddProducts(ProductModel product)
         {
+            
+            Product product2 = new Product();
 
-            var res = await _inventoryManagementRepository.AddProducts(product);
-            var warehouseEmail = _peoplerepo.GetWarehouse().Result.Data.Where(x => x.WarehouseId == product.Warehouse).Select(x=>x.supplier.Email).FirstOrDefault();
+            product2.SKU = product.SKU;
+            product2.Quantity = product.Quantity;
+            product2.ProductImageUrl = product.ProductImageUrl;
+            product2.ProductName = product.ProductName;
+            product2.ProductDescription = product.ProductDescription;
+            product2.ExpiredDate = product.ExpiredDate;
+            product2.Price = product.Price;
+            product2.Category.CategoryName = product.Category;
+            product2.Category.CategorySLug = product.Category;
+            product2.Brand.BrandName = product.Brand;
+            product2.Store = product.Store;
+            product2.Warehouse = product.Warehouse;
+            product2.UnitCost = product.UnitCost;
+            product2.ManufacturedDate = product.ManufacturedDate;
+            product2.Barcode = product.Barcode;
+            product2.CreatedAt = DateTime.Now;
+            product2.CreatedBy = "ShopOwner";
+            product2.Unit = product.Unit;
+           
+            var res = await _inventoryManagementRepository.AddProducts(product2);
+            //var warehouseEmail = _peoplerepo.GetWarehouse().Result.Where(x => x.WarehouseId == product.Warehouse).Select(x=>x.supplier.Email).FirstOrDefault();
 
-            await _notification.SendNotificationAsync(
-                   product,
-                   warehouseEmail,
-                   "New Products Added",
-                   user => $"New Products Added for: {warehouseEmail}"
-                   );
+            //await _notification.SendNotificationAsync(
+            //       product,
+            //       warehouseEmail,
+            //       "New Products Added",
+            //       user => $"New Products Added for: {warehouseEmail}"
+            //       );
 
             return new ServiceResponse<bool>()
             {

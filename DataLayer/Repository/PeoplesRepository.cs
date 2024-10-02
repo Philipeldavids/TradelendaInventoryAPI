@@ -1,6 +1,7 @@
 ﻿using DataLayer.Interfaces;
 using Infracstructure;
 using Infracstructure.Models;
+using Infracstructure.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,19 +23,15 @@ namespace DataLayer.Repository
 
         public async Task<Store> GetStoreByCode(int code)
         {
-            var res = _context.Stores.Where(x => x.SupplierID == code).FirstOrDefault();
+            var res = _context.Stores.Where(x => x.SupplierID == code.ToString()).FirstOrDefault();
 
             return res;
         }
-       public async Task<ServiceResponse<List<Store>>> GetStore()
+       public async Task<List<Store>> GetStore()
         {
-          var res = _context.Stores.ToList();
-            return new ServiceResponse<List<Store>>()
-            {
-                Data = res,
-                Success = true,
-                Message = "Stores list Retrieved succesfully"
-            };
+            var res = _context.Stores.ToList();
+            return res;
+             
         }
 
         public async Task<ServiceResponse<bool>> AddStore(Store store)
@@ -260,23 +257,37 @@ namespace DataLayer.Repository
         }
 
         
-        public async Task<ServiceResponse<List<Warehouse>>> GetWarehouse()
+        public async Task<List<Warehouse>> GetWarehouse()
         {
             var res = _context.Warehouses
                 .Include(propa => propa.Stock)
                 .Include(p=>p.supplier).ToList();
 
-            return new ServiceResponse<List<Warehouse>>()
-            {
-                Data = res,
-                Success = true,
-                Message = "Warehouse list retrieved successfully"
-            };
+            return res;
+            
         }
        
-        public async Task<ServiceResponse<bool>> AddWarehouse(Warehouse warehouse)
+        public async Task<ServiceResponse<bool>> AddWarehouse(WarehouseModel warehouse)
         {
-            _context.Warehouses.Add(warehouse);
+            Warehouse warehous = new Warehouse();
+            warehous.ContactPerson = warehouse.ContactPerson;
+            warehous.ContactPhone = warehouse.PhoneNumber;
+            warehous.supplier.PhoneNumber = warehouse.WorkPhone;
+            warehous.supplier.Address = warehouse.Address1;
+            warehous.Address1 = warehouse.Address1;
+            warehous.Address2 = warehouse.Address2;
+            warehous.supplier.Email = warehouse.Email;
+            warehous.City = warehouse.City;
+            warehous.Country = warehouse.Country;
+            warehous.State = warehouse.State;
+            warehous.ZipCode = warehouse.ZipCode;
+            warehous.supplier.Name = warehouse.ContactPerson;
+            warehous.supplier.Country = warehouse.Country;
+            warehous.WarehouseId = warehouse.WarehouseID;
+            warehous.WarehouseName = warehouse.WarehouseName;
+            warehous.Status = true;
+
+            _context.Warehouses.Add(warehous);
             _context.SaveChanges();
             return new ServiceResponse<bool>()
             {

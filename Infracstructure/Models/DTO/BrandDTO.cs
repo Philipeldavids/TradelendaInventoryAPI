@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infracstructure.Models.Enums
+namespace Infracstructure.Models.DTO
 {
-    public class Brand
+    public class BrandDTO
     {
-        [Key]
-        public string BrandId { get; set; } = Guid.NewGuid().ToString();
+        [Required, MaxLength(50)]
         public string BrandName { get; set; }
+        
         public string? Logo { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public bool Status { get; set; } 
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
+
+        public bool Status { get; set; }
     }
 }

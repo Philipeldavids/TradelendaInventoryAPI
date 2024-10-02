@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infracstructure.Models.DTO;
 
 namespace DataLayer.Interfaces
 {
     public interface IPeoplesRepository
     {
         Task<Store> GetStoreByCode(int code);
-        Task<ServiceResponse<List<Store>>> GetStore();
+        Task<List<Store>> GetStore();
         Task<ServiceResponse<bool>> AddStore(Store store);
         Task<ServiceResponse<bool>> EditStore(Store store, string Id);
         Task<ServiceResponse<bool>> DeleteStores(string ID);
@@ -24,8 +25,8 @@ namespace DataLayer.Interfaces
         Task<ServiceResponse<bool>> AddSupplier(Supplier supplier);
         Task<ServiceResponse<bool>> EditSupplier(Supplier supplier, string Id);
         Task<ServiceResponse<bool>> DeleteSupplier(string Id);
-        Task<ServiceResponse<List<Warehouse>>> GetWarehouse();
-        Task<ServiceResponse<bool>> AddWarehouse(Warehouse warehouse);
+        Task<List<Warehouse>> GetWarehouse();
+        Task<ServiceResponse<bool>> AddWarehouse(WarehouseModel warehouse);
         Task<ServiceResponse<bool>> EditWarehouse(Warehouse warehouse, string Id);
         Task<ServiceResponse<bool>> DeleteWarehouse(string Id);
     }

@@ -12,15 +12,16 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY ["TradelendaInventoryAPI/TradelendaInventoryAPI.csproj", "TradelendaInventoryAPI/"]
-COPY ["../BusinessLogic/BusinessLogic.csproj", "BusinessLogic/"]
-COPY ["../DataLayer/DataLayer.csproj", "DataLayer/"]
-COPY ["../Infracstructure/Infracstructure.csproj", "Infracstructure/"]
-#COPY ["TradelendaInventoryAPI/TradelendaInventoryAPI.csproj", "TradelendaInventoryAPI/"]
-#COPY ["BusinessLogic/BusinessLogic.csproj", "BusinessLogic/"]
-#COPY ["DataLayer/DataLayer.csproj", "DataLayer/"]
-#COPY ["Infracstructure/Infracstructure.csproj", "Infracstructure/"]
-#
+#COPY TradelendaInventoryAPI.csproj TradelendaInventoryAPI/
+#COPY BusinessLogic/BusinessLogic.csproj BusinessLogic/
+#COPY DataLayer/DataLayer.csproj DataLayer/
+#COPY Infracstructure/Infracstructure.csproj Infracstructure/
+
+COPY ["TradelendaInventoryAPI.csproj", "TradelendaInventoryAPI/"]
+COPY ["BusinessLogic/BusinessLogic.csproj", "BusinessLogic/"]
+COPY ["DataLayer/DataLayer.csproj", "DataLayer/"]
+COPY ["Infracstructure/Infracstructure.csproj", "Infracstructure/"]
+
 RUN dotnet restore "./TradelendaInventoryAPI/TradelendaInventoryAPI.csproj"
 WORKDIR "/src/TradelendaInventoryAPI"
 COPY . .

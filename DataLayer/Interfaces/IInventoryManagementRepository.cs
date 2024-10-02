@@ -1,5 +1,6 @@
 ﻿using Infracstructure.Models;
 using Infracstructure.Models.DTO;
+using Infracstructure.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,10 @@ namespace DataLayer.Interfaces
         Task<bool> AddProducts(Product product);
         Task<bool> EditProduct(Product produt, string Id);
         Task<bool> DeleteProduct(string Id);
+        Task<bool> EditBrand(string Id, Brand brand);
+        Task<bool> AddBrand(BrandDTO brand);
+        Task<List<Brand>> GetBrand();
+        Task<bool> DeleteBrand(string id);
 
         Task<IEnumerable<Product>> GetProductbyId(string Id);
         Task<List<Product>> GetLOwStockProducts();

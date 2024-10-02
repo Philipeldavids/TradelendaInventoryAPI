@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Services;
+﻿using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using Infracstructure.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,9 @@ namespace TradelendaInventoryAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class PurchaseController : ControllerBase
     {
-        private readonly PurchaseService _purchaseService;
+        private readonly IPurchaseService _purchaseService;
 
-        public PurchaseController(PurchaseService purchaseService)
+        public PurchaseController(IPurchaseService purchaseService)
         {
             _purchaseService = purchaseService;
         }
@@ -24,9 +25,9 @@ namespace TradelendaInventoryAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Purchase>>> GetPurchaseListAsync()
+        public async Task<ActionResult> GetPurchaseList()
         {
-            var result = await _purchaseService.GetPurchaseListAsync();
+            var result = await _purchaseService.GetPurchaseList();
             return Ok(result);
         }
 

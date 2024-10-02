@@ -195,7 +195,7 @@ namespace BusinessLogic.Services
             return (true, "Purchase added successfully");
         }
 
-        public async Task<IEnumerable<Purchase>> GetPurchaseListAsync()
+        public async Task<IEnumerable<Purchase>> GetPurchaseList()
         {
             return _context.Purchases.ToList();
         }

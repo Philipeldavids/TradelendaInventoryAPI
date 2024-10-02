@@ -20,7 +20,7 @@ namespace Infracstructure.Models
         public string ContactPerson { get; set; } = string.Empty;
 
         [Required]
-        public int SupplierID {  get; set; }   
+        public string SupplierID {  get; set; }   
         public string Email {  get; set; }
 
         public string PhoneNumber {  get; set; }

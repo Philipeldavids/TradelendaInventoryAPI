@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayer.Helper;
+using Infracstructure.Models.DTO;
 
 namespace BusinessLogic.Services
 {
@@ -129,11 +130,11 @@ namespace BusinessLogic.Services
             return true;
         }
 
-        public async Task<bool> AddWarehouse(Warehouse warehouse)
+        public async Task<bool> AddWarehouse(WarehouseModel warehouse)
         {
-            var result = _peoplesRepository.AddWarehouse(warehouse);
+            var result = await _peoplesRepository.AddWarehouse(warehouse);
             
-                if (result == null)
+                if (result.Data == false)
                 {
                     return false;
                 }
@@ -141,9 +142,9 @@ namespace BusinessLogic.Services
 
                 await _notificationService.SendNotificationAsync(
                 warehouse,
-                        warehouse.supplier.Email,
+                        warehouse.Email,
                         "New Warehouse Created",
-                        warehouse => $"New Warehouse Created for: {warehouse.supplier.Email} with role WarehouseID: {warehouse.WarehouseId} and Warehouse Name: {warehouse.WarehouseName}"
+                        warehouse => $"New Warehouse Created for: {warehouse.Email} with role WarehouseID: {warehouse.WarehouseID} and Warehouse Name: {warehouse.WarehouseName}"
                         );
 
 

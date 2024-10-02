@@ -9,7 +9,7 @@ namespace BusinessLogic.Services
         Task<ServiceResponse<PaginationModel<IEnumerable<Product>>>> GetProducts(int pageSize, int pageNumber);
         Task<ServiceResponse<PaginationModel<IEnumerable<Product>>>> GetProductByID(string Id, int pageSize, int pageNumber);
         Task<ServiceResponse<bool>> EditProduct(Product product, string Id);
-        Task<ServiceResponse<bool>> AddProducts(Product product);
+        Task<ServiceResponse<bool>> AddProducts(ProductModel product);
         Task<ServiceResponse<bool>> DeleteProduct(string id);
     }
 }

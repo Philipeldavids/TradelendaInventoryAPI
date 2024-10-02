@@ -1,5 +1,6 @@
 ﻿
 using Infracstructure.Models;
+using Infracstructure.Models.Enums;
 using Infracstructure.Models.UserManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -53,8 +54,8 @@ namespace DataLayer
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category);// Each Product has one Category
                                          // Each Category can have many Products
-            
-            
+            modelBuilder.Entity<Product>()
+        .HasOne(p => p.Brand);
             modelBuilder.Entity<Purchase>().HasOne(p => p.Supplier);
 
             modelBuilder.Entity<OrderItem>().HasKey(p => p.OrderItemId);
@@ -68,19 +69,23 @@ namespace DataLayer
             modelBuilder.Entity<Stock>().HasKey(p=> p.StockId);
             modelBuilder.Entity<Warehouse>().HasOne(p => p.Stock);
             modelBuilder.Entity<Warehouse>().HasOne(p=>p.supplier);
-           modelBuilder.Entity<Store>().HasKey(p=>p.StoreId);
+             modelBuilder.Entity<Store>().HasKey(p=>p.StoreId);
 
             modelBuilder.Entity<Payment>().HasKey(p => p.Reference);    
             modelBuilder.Entity<Sale>().HasKey(p => p.Reference);
-
+            
             modelBuilder.Entity<SalesReturn>().HasKey(p=>p.Reference);
-
+            modelBuilder.Entity<Brand>().HasKey(p=>p.BrandId);
+            modelBuilder.Entity<SalesReport>().HasKey(p=>p.SalesReportId);
+            modelBuilder.Entity<PurchaseReport>().HasKey(p=>p.PurcahseReportId);    
            
             // Other configurations can go here
         }
         //public DbSet<AppUser> Users { get; set; }
 
-         
+        public DbSet<PurchaseReport> PurchaseReports { get; set; }
+        public DbSet<SalesReport> SalesReports { get; set; }
+        public DbSet<Brand> Brand { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Product> Products { get; set; }
 

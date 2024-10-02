@@ -12,10 +12,12 @@ namespace BusinessLogic.Interfaces
     public interface IPurchaseService
     {
         Task<(bool Success, string Message)> AddNewPurchaseAsync(Purchase purchase);
-        Task<IEnumerable<Purchase>> GetPurchaseListAsync();
+        Task<IEnumerable<Purchase>> GetPurchaseList();
         Task<(bool Success, string Message)> DeletePurchaseAsync(int purchaseId);
         Task<(bool Success, string Message)> EditPurchaseAsync(int purchaseId, Purchase purchase);
         Task<(bool Success, string Message)> ImportPurchaseAsync(IFormFile file);
+        Task<PurchaseOrderReport> GetPurchaseOrderReportAsync();
+
        // Task<PurchaseOrderReport> GetPurchaseOrderReportAsync();
         Task<(bool Success, string Message)> AddPurchaseReturnAsync(PurchaseReturn purchaseReturn);
         Task<IEnumerable<PurchaseReturn>> GetPurchaseReturnListAsync();

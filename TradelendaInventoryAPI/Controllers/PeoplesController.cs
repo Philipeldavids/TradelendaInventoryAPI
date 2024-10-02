@@ -3,6 +3,7 @@ using DataLayer.Interfaces;
 using DataLayer.Repository;
 using Infracstructure.DTOs;
 using Infracstructure.Models;
+using Infracstructure.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace TradelendaInventoryAPI.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> AddStore(Store store)
+        public async Task<ActionResult> AddStore([FromBody] Store store)
         {
             try
             {
@@ -53,8 +54,8 @@ namespace TradelendaInventoryAPI.Controllers
 
             }
         }
-        [HttpDelete]
-        public async Task<ActionResult> DeleteStores(string Id)
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult> DeleteStore(string Id)
         {
             try
             {
@@ -125,7 +126,7 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> AddWarehouse([FromBody] Warehouse warehouse)
+        public async Task<ActionResult> AddWarehouse([FromBody] WarehouseModel warehouse)
         {
             try
             {

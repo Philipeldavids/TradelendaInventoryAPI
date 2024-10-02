@@ -2,8 +2,10 @@
 using DataLayer.Interfaces;
 using Infracstructure.Models;
 using Infracstructure.Models.DTO;
+using Infracstructure.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace TradelendaInventoryAPI.Controllers
 {
@@ -17,6 +19,62 @@ namespace TradelendaInventoryAPI.Controllers
         {
             _inventoryManagementService = inventoryManagementService;
             _inventoryManagementRepository = inventoryManagementRepository;
+        }
+
+        [HttpPost("AddBRAND")]
+
+        public async Task<IActionResult> AddBrand([FromBody]BrandDTO brand)
+        {
+            try
+            {
+                var result = await _inventoryManagementRepository.AddBrand(brand);
+                return Ok(result);
+            }
+            catch(Exception ex) 
+            { 
+                return BadRequest(ex.Message);  
+            }
+        }
+        [HttpGet("GetBrand")]
+        public async Task<IActionResult> GetBrand()
+        {
+            try
+            {
+                var result = await _inventoryManagementRepository.GetBrand();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteBrand/{Id}")]
+        public async Task<IActionResult> DeleteBrand(string Id)
+        {
+            try
+            {
+                var result = await _inventoryManagementRepository.DeleteBrand(Id);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("EditBrand")]
+        public async Task<IActionResult> EditBrand(string Id, Brand brand)
+        {
+            try
+            {
+                var res =await  _inventoryManagementRepository.EditBrand(Id, brand);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("AddCategory")]
@@ -151,10 +209,11 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost("AddProduct")]
-        public async Task<ActionResult> AddProduct([FromBody]Product product)
+        public async Task<ActionResult> AddProduct([FromBody]ProductModel product)
         {
             try
             {
+                
                 var res = await _inventoryManagementService.AddProducts(product);
                 return Ok(res);
             }

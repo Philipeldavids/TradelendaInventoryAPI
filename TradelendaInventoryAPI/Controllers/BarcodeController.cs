@@ -25,7 +25,10 @@ namespace TradelendaInventoryAPI.Controllers
             }
 
             var barcodeImage = _barcodeService.GenerateBarcode(text);
-            return File(barcodeImage, "image/png");
+
+            using var memoryStream = new MemoryStream(barcodeImage);
+
+            return File(memoryStream, "image/png");
         }
 
 
@@ -38,7 +41,9 @@ namespace TradelendaInventoryAPI.Controllers
             }
 
             var qrCodeImage = _barcodeService.GenerateQRCode(text);
-            return File(qrCodeImage, "image/png");
+
+            using var memoryStream = new MemoryStream(qrCodeImage);
+            return File(memoryStream, "image/png");
         }
     }
 }

@@ -17,34 +17,18 @@ namespace DataLayer
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
 
-        
+       
 
        // public DbSet<Role> Roles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //var permissions = new List<Permission>
-            //{
-            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.ViewUsers.ToString(), Description = "Can view users" },
-            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.EditUsers.ToString(), Description = "Can edit users" },
-            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.DeleteUsers.ToString(), Description = "Can delete users" },
-            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.CreateUsers.ToString(), Description = "Can create users" }
-            //};
-
-
-
-            //modelBuilder.Entity<Permission>().HasOne(p=>p.Roles)
-            //    .WithMany(p=>p.Permissions)
-            //    .HasForeignKey(p=>p.PermissionId);
-
-
-            //modelBuilder.Entity<Role>().HasKey(p => p.RoleId);
-
+            
+            
 
             // Define composite primary key using HasKey
             modelBuilder.Entity<User>()

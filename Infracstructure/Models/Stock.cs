@@ -18,7 +18,7 @@ namespace Infracstructure.Models
         
         public string? Person { get; set; }
 
-        public string? Quantity { get; set; }        
+        public int? Quantity { get; set; }        
        
 
     }
@@ -37,6 +37,11 @@ namespace Infracstructure.Models
     {
         public string StockTransferId { get; set; } = Guid.NewGuid().ToString();        
         public int QuantityTransferred { get; set; }
+
+        public List<Product> ProductMoved { get; set; } = new List<Product>();
+
+        public string? Notes { get; set; }
+        public string? RefNumber { get; set; }
         public DateTime TransferDate { get; set; }
         public Warehouse FromWarehouse { get; set; }
         public Warehouse ToWarehouse { get; set; }

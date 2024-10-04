@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Infracstructure.Models.UserManagement;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data.Entity;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,8 +55,10 @@ builder.Services.AddAuthentication(options =>
     });
 
 
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//      options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -116,7 +119,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseSwagger();
+//app.UseSwaggerUI(c =>
+//{
+//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+//    c.RoutePrefix = string.Empty; // Serve the Swagger UI at the root (http://localhost:8082/)
+//});
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

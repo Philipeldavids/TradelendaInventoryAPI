@@ -99,8 +99,19 @@ namespace BusinessLogic.Services
 
         public async Task<(bool Success, string Message)> StockTransferAsync(StockTransfer transfer)
         {
+            var warehousefrom = _context.Warehouses.Where(x => x.WarehouseId == transfer.FromWarehouse.WarehouseId).FirstOrDefault();
+            var warehouseto = _context.Warehouses.Where(_x => _x.WarehouseId == transfer.ToWarehouse.WarehouseId).FirstOrDefault();
+
+            warehousefrom.Stock.Quantity = warehousefrom.Stock.Quantity - transfer.QuantityTransferred;
+            warehouseto.Stock.Quantity = warehouseto.Stock.Quantity + transfer.QuantityTransferred;
+
+            _context.Warehouses.Add(warehousefrom);
+            _context.SaveChanges();
+            _context.Warehouses.Add(warehouseto); 
+            _context.SaveChanges();
+
             _context.StockTransfers.Add(transfer);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return (true, "Stock transfer completed successfully");
         }
 

@@ -52,11 +52,19 @@ namespace TradelendaInventoryAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("report")]
-        public async Task<ActionResult<PurchaseOrderReport>> GetPurchaseOrderReportAsync()
+        [HttpGet]
+        public async Task<ActionResult> GetPurchaseOrderReport()
         {
-            var result = await _purchaseService.GetPurchaseOrderReportAsync();
-            return Ok(result);
+            try
+            {
+                var result = await _purchaseService.GetPurchaseOrderReport();
+                return Ok(result);
+            }
+            catch(Exception ex) 
+            {
+                return BadRequest(ex.Message);  
+            }
+            
         }
     }
 

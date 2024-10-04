@@ -16,7 +16,7 @@ namespace BusinessLogic.Interfaces
         Task<(bool Success, string Message)> DeletePurchaseAsync(int purchaseId);
         Task<(bool Success, string Message)> EditPurchaseAsync(int purchaseId, Purchase purchase);
         Task<(bool Success, string Message)> ImportPurchaseAsync(IFormFile file);
-        Task<PurchaseOrderReport> GetPurchaseOrderReportAsync();
+        Task<PurchaseReport> GetPurchaseOrderReport();
 
        // Task<PurchaseOrderReport> GetPurchaseOrderReportAsync();
         Task<(bool Success, string Message)> AddPurchaseReturnAsync(PurchaseReturn purchaseReturn);

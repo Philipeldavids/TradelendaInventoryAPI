@@ -95,6 +95,12 @@ namespace DataLayer.Repository
             var category = _context.Categories.Where(x=>x.CategoryId == id).FirstOrDefault();
             return category;
         }
+
+        public async Task<Brand> GetBrandById (string Id)
+        {
+            var brand = _context.Brand.Where(x=>x.BrandId == Id).FirstOrDefault();
+            return brand;
+        }
         public async Task<IEnumerable<Category>> GetGategoryList()
         {
             var categories = _context.Categories.ToList();
@@ -236,7 +242,7 @@ namespace DataLayer.Repository
         }
         public async Task<List<Product>> GetExpiredProducts()
         {
-            var product = _context.Products.Where(x => x.ExpiredDate <= DateTime.UtcNow && x.IsExpired == true)
+            var product = _context.Products.Where(x => x.ExpiredDate <= DateTime.UtcNow)
                 .Include(produpct => produpct.Category)
                 .ToList();
             if (product != null)

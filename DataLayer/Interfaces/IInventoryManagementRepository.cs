@@ -13,6 +13,7 @@ namespace DataLayer.Interfaces
     {
         Task<bool> AddCategory(CategoryDTO category);
         Task<Category> GetCategoryById(string id);
+        Task<Brand> GetBrandById(string Id);
         Task<IEnumerable<Category>> GetGategoryList();
         Task<bool> EditCategory(CategoryDTO category);
         Task<bool> DeleteCategory(string CategoryId);

@@ -73,7 +73,8 @@ namespace BusinessLogic.Services
 
         public async Task<ServiceResponse<bool>> AddProducts(ProductModel product)
         {
-            
+            var category = await _inventoryManagementRepository.GetCategoryById(product.Category);
+            var brand = await _inventoryManagementRepository.GetBrandById(product.Brand);
             Product product2 = new Product();
 
             product2.SKU = product.SKU;
@@ -83,9 +84,9 @@ namespace BusinessLogic.Services
             product2.ProductDescription = product.ProductDescription;
             product2.ExpiredDate = product.ExpiredDate;
             product2.Price = product.Price;
-            product2.Category.CategoryName = product.Category;
-            product2.Category.CategorySLug = product.Category;
-            product2.Brand.BrandName = product.Brand;
+            product2.Category = category;
+            product2.Category.CategorySLug = category.CategoryName;
+            product2.Brand = brand;
             product2.Store = product.Store;
             product2.Warehouse = product.Warehouse;
             product2.UnitCost = product.UnitCost;

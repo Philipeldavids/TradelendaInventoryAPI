@@ -10,6 +10,6 @@ namespace BusinessLogic.Interfaces
     public interface IReportingAndAnalyticsService
     {
         Task<List<SalesReport>> GetSalesReport();
-        Task<List<PurchaseReport>> GetPurchaseReport();
+        //Task<List<PurchaseReport>> GetPurchaseReport();
     }
 }

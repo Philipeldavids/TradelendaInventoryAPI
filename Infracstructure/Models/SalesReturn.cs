@@ -9,13 +9,13 @@ namespace Infracstructure.Models
 {
     public class SalesReturn
     {
-       
-        public Customer Customer { get; set; }            
+
+        public Customer Customer { get; set; } = new Customer();      
         public DateTime Date { get; set; }
         [Key]
         public string Reference { get; set; }             
-        public string Status { get; set; }                
-        public Product Product { get; set; }              
+        public string Status { get; set; }
+        public Product Product { get; set; } = new Product();        
         public decimal NetUnitPrice { get; set; }         
         public decimal Stock { get; set; }                
         public int Quantity { get; set; }                 

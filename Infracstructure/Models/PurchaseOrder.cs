@@ -12,8 +12,8 @@ namespace Infracstructure.Models
     {
         [Key]
         public string OrderId { get; set; } = Guid.NewGuid().ToString();
-        public string CustomerId { get; set; } 
-        public List<OrderItem>? Items { get; set; }
+        public string CustomerId { get; set; }
+        public List<OrderItem>? Items { get; set; } = new List<OrderItem>();
         public bool Status { get; set; }
         public DateTime OrderPlacedAt { get; set; }
         public DateTime? OrderFulfilledAt { get; set; }

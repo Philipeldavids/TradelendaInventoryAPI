@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241003154525_purchaseedit")]
+    partial class purchaseedit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -328,6 +331,10 @@ namespace DataLayer.Migrations
                     b.Property<int>("InstockQty")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("PurchaseAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -335,6 +342,8 @@ namespace DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PurcahseReportId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("PurchaseReports");
                 });
@@ -1075,6 +1084,17 @@ namespace DataLayer.Migrations
                         .HasForeignKey("Infracstructure.Models.PurchaseOrder", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Infracstructure.Models.PurchaseReport", b =>
+                {
+                    b.HasOne("Infracstructure.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Infracstructure.Models.PurchaseReturn", b =>

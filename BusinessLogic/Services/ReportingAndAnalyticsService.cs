@@ -26,11 +26,11 @@ namespace BusinessLogic.Services
             return report;
         }
 
-        public async Task<List<PurchaseReport>> GetPurchaseReport()
-        {
-            var report = _context.PurchaseReports.ToList();
+        //public async Task<List<PurchaseReport>> GetPurchaseReport()
+        //{
+        //    var report = _context.PurchaseReports.ToList();
 
-            return report;
-        }
+        //    return report;
+        //}
     }
 }

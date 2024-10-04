@@ -28,23 +28,7 @@ namespace DataLayer
         {
             base.OnModelCreating(modelBuilder);
 
-            //var permissions = new List<Permission>
-            //{
-            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.ViewUsers.ToString(), Description = "Can view users" },
-            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.EditUsers.ToString(), Description = "Can edit users" },
-            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.DeleteUsers.ToString(), Description = "Can delete users" },
-            //    new Permission { PermissionId = Guid.NewGuid().ToString(), PermissionName = Permissions.CreateUsers.ToString(), Description = "Can create users" }
-            //};
-
-
-
-            //modelBuilder.Entity<Permission>().HasOne(p=>p.Roles)
-            //    .WithMany(p=>p.Permissions)
-            //    .HasForeignKey(p=>p.PermissionId);
-
-
-            //modelBuilder.Entity<Role>().HasKey(p => p.RoleId);
-
+            
 
             // Define composite primary key using HasKey
             modelBuilder.Entity<User>()
@@ -77,7 +61,7 @@ namespace DataLayer
             modelBuilder.Entity<SalesReturn>().HasKey(p=>p.Reference);
             modelBuilder.Entity<Brand>().HasKey(p=>p.BrandId);
             modelBuilder.Entity<SalesReport>().HasKey(p=>p.SalesReportId);
-            modelBuilder.Entity<PurchaseReport>().HasKey(p=>p.PurcahseReportId);    
+           // modelBuilder.Entity<PurchaseReport>().HasKey(p=>p.PurcahseReportId);    
            
             // Other configurations can go here
         }

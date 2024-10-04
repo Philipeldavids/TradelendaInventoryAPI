@@ -17,17 +17,17 @@ namespace DataLayer
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
 
-        
+       
 
        // public DbSet<Role> Roles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             
 
             // Define composite primary key using HasKey
@@ -61,7 +61,7 @@ namespace DataLayer
             modelBuilder.Entity<SalesReturn>().HasKey(p=>p.Reference);
             modelBuilder.Entity<Brand>().HasKey(p=>p.BrandId);
             modelBuilder.Entity<SalesReport>().HasKey(p=>p.SalesReportId);
-           // modelBuilder.Entity<PurchaseReport>().HasKey(p=>p.PurcahseReportId);    
+            modelBuilder.Entity<PurchaseReport>().HasKey(p=>p.PurcahseReportId);    
            
             // Other configurations can go here
         }

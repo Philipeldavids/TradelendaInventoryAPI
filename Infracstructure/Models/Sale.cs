@@ -10,10 +10,10 @@ namespace Infracstructure.Models
     public class Sale
     {
              
-        public Customer Customer{ get; set; } 
-        public Supplier Supplier { get; set; }
+        public Customer Customer{ get; set; } = new Customer();
+        public Supplier Supplier { get; set; } = new Supplier();
 
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
         [Key]
         public string Reference { get; set; }             
         public DateTime Date { get; set; }                

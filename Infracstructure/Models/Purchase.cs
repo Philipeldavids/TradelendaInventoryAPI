@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Infracstructure.Models
         [Key]
         public int PurchaseId { get; set; }
 
-        public Supplier Supplier { get; set; }
+        public Supplier Supplier { get; set; } = new Supplier();
 
         public DateTime PurchaseDate { get; set; }
 
@@ -28,7 +29,7 @@ namespace Infracstructure.Models
 
         public string CreatedBy { get; set; }
 
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
 
         public decimal Discount { get; set; }
 

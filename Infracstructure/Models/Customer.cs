@@ -19,7 +19,7 @@ namespace Infracstructure.Models
         public string ShippingAddress { get; set; }
         public string Description { get; set; }
 
-        public PurchaseOrder? PurchaseOrders { get; set;}
+        public PurchaseOrder? PurchaseOrders { get; set;} = new PurchaseOrder();
     }
 
 }

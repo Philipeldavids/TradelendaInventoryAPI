@@ -10,8 +10,8 @@ namespace Infracstructure.Models
 {
     public class PurchaseReport
     {
-        //[Key]
-       // public string PurcahseReportId { get; set; }
+        [Key]
+        public string PurcahseReportId { get; set; }
        // public string ProductName { get; set; }
         public decimal PurchaseAmount { get; set; }
         public int PurchaseQuatity { get; set; }

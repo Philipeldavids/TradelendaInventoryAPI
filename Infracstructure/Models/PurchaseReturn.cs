@@ -9,7 +9,7 @@ namespace Infracstructure.Models
     public class PurchaseReturn
     {
         public int Id { get; set; }
-        public Supplier Supplier { get; set; }
+        public Supplier Supplier { get; set; } = new Supplier();
         public DateTime Date { get; set; }
         public string ReferenceNo { get; set; }
         public string ProductName { get; set; }

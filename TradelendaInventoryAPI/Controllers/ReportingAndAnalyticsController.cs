@@ -10,12 +10,12 @@ namespace TradelendaInventoryAPI.Controllers
     public class ReportingAndAnalyticsController : ControllerBase
     {
         public readonly IReportingAndAnalyticsService _reportingAndAnalytics;
-        private readonly IPurchaseService purchaseService;
+        private readonly IPurchaseService _purchaseService;
 
         public ReportingAndAnalyticsController(IReportingAndAnalyticsService reportingAndAnalytics, IPurchaseService purchaseService)
         {
             _reportingAndAnalytics = reportingAndAnalytics;
-            this.purchaseService = purchaseService;
+            _purchaseService = purchaseService;
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace TradelendaInventoryAPI.Controllers
         {
             try
             {
-                var result = await this.purchaseService.GetPurchaseOrderReport();
+                var result = await _purchaseService.GetPurchaseOrderReport();
                 return Ok(result);
             }
             catch(Exception ex)

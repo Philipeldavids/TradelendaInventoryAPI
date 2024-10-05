@@ -17,7 +17,7 @@ namespace DataLayer
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            
         }
 
 

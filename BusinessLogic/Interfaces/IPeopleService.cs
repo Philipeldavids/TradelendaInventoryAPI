@@ -10,9 +10,9 @@ namespace BusinessLogic.Interfaces
 {
     public interface IPeopleService
     {
-        Task<bool> AddCustomer(Customer customer);
-        Task<bool> AddSupplier(Supplier supplier);
+        Task<bool> AddCustomer(CustomerModel customer);
+        Task<bool> AddSupplier(SupplierModel supplier);
         Task<bool> AddWarehouse(WarehouseModel warehouse);
-        Task<bool> AddStore(Store store);
+        Task<bool> AddStore(StoreModel store);
     }
 }

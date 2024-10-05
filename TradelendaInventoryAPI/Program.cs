@@ -20,6 +20,8 @@ using Microsoft.OpenApi.Models;
 using Infracstructure.Models.UserManagement;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data.Entity;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,7 +62,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+//builder.Services.AddIdentity<User, IdentityRole>()
+//            .AddEntityFrameworkStores<ApplicationDbContext>()
+//            .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -113,11 +117,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.EnsureCreatedAsync();  // Ensures database is created
-}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -125,13 +125,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-//app.UseSwagger();
-//app.UseSwaggerUI(c =>
+//var serviceScopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+//using (var serviceScope = serviceScopeFactory.CreateScope())
 //{
-//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-//    c.RoutePrefix = string.Empty; // Serve the Swagger UI at the root (http://localhost:8082/)
-//});
+//    var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+//    dbContext.Database.EnsureCreated();
+//}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+//    dbContext.Database.EnsureCreated();  // Ensures database is created
+//}
 
 app.UseHttpsRedirection();
 

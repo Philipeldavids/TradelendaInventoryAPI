@@ -11,7 +11,7 @@ namespace DataLayer.Interfaces
 {
     public interface IPeoplesRepository
     {
-        Task<Store> GetStoreByCode(int code);
+        //Task<Store> GetStoreByCode(int code);
         Task<List<Store>> GetStore();
         Task<ServiceResponse<bool>> AddStore(Store store);
         Task<ServiceResponse<bool>> EditStore(Store store, string Id);

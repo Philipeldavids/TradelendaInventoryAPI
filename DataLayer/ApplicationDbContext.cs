@@ -17,7 +17,7 @@ namespace DataLayer
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+           
         }
 
 
@@ -28,7 +28,8 @@ namespace DataLayer
         {
             base.OnModelCreating(modelBuilder);
             
-            
+
+
 
             // Define composite primary key using HasKey
             modelBuilder.Entity<User>()

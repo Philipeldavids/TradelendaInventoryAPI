@@ -51,7 +51,7 @@ namespace BusinessLogic.Services
             return password.ToString();
 
         }
-        public async Task<bool> AddCustomer(Customer customer)
+        public async Task<bool> AddCustomer(CustomerModel customer)
         {
             var password = GenerateDefaultPassword(12);
             var FirstName = customer.FullName.Split("").Contains(" ") ? customer.FullName.Split(" ")[0] : customer.FullName;
@@ -76,7 +76,19 @@ namespace BusinessLogic.Services
             {
                 return false;
             }
-            await _peoplesRepository.AddCustomer(customer);
+
+            Customer customer1 = new Customer();
+            customer1.FullName = customer.FullName;
+            customer1.PhoneNumber = customer.PhoneNumber;
+            customer1.Code = customer.Code;
+            customer1.Email = customer.Email;
+            customer1.ShippingAddress = customer.ShippingAddress;
+            customer1.Description = customer.Description;
+            customer1.PurchaseOrders = customer.PurchaseOrders;
+           
+
+
+            await _peoplesRepository.AddCustomer(customer1);
 
             await _notificationService.SendNotificationAsync(
                    user,
@@ -89,7 +101,7 @@ namespace BusinessLogic.Services
             return true;
         }
 
-        public async Task<bool> AddSupplier(Supplier supplier)
+        public async Task<bool> AddSupplier(SupplierModel supplier)
         {
             var password = GenerateDefaultPassword(12);
             User user = new User();
@@ -113,7 +125,17 @@ namespace BusinessLogic.Services
             { 
                 return false;
             }
-           var resut = await _peoplesRepository.AddSupplier(supplier);
+            Supplier supplier1 = new Supplier();
+            supplier1.Name = supplier.Name;
+            supplier1.PhoneNumber = supplier.PhoneNumber;
+            supplier1.Address = supplier.Address;
+            supplier1.Email = supplier.Email;
+            supplier1.Code = supplier.Code;
+            supplier1.City = supplier.City;
+            supplier1.Country = supplier.Country;
+            supplier1.Description = supplier.Description;
+            
+           var resut = await _peoplesRepository.AddSupplier(supplier1);
             if(resut.Success != true)
             {
                 return false;
@@ -152,10 +174,16 @@ namespace BusinessLogic.Services
 
         }
 
-        public async Task<bool> AddStore(Store store)
+        public async Task<bool> AddStore(StoreModel store)
         {
-            
-            var result = await _peoplesRepository.AddStore(store);
+            Store store1 = new Store();
+            store1.StoreName = store.StoreName;
+            store1.PhoneNumber = store.PhoneNumber;
+            store1.Email = store.Email;
+            store1.ContactPerson = store.ContactPerson;
+            store1.Status = store.Status;
+
+            var result = await _peoplesRepository.AddStore(store1);
             if(result == null)
             {
                 return false;
@@ -165,7 +193,7 @@ namespace BusinessLogic.Services
                store,
                        store.Email,
                        "New Warehouse Created",
-                       store => $"New Warehouse Created for: {store.Email} with role StoreID: {store.StoreId} and Store Name: {store.StoreName}"
+                       store => $"New Warehouse Created for: {store.Email} with role StoreID: {store1.StoreId} and Store Name: {store.StoreName}"
                        );
 
 

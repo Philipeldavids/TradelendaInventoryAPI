@@ -26,7 +26,7 @@ namespace TradelendaInventoryAPI.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> AddStore([FromBody] Store store)
+        public async Task<ActionResult> AddStore([FromBody] StoreModel store)
         {
             try
             {
@@ -171,7 +171,7 @@ namespace TradelendaInventoryAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddCustomer([FromBody]Customer customer)
+        public async Task<ActionResult> AddCustomer([FromBody]CustomerModel customer)
         {
             try
             {
@@ -214,7 +214,7 @@ namespace TradelendaInventoryAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> AddSupplier([FromBody]Supplier supplier)
+        public async Task<ActionResult> AddSupplier([FromBody]SupplierModel supplier)
         {
             try
             {

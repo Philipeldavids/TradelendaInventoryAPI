@@ -21,12 +21,12 @@ namespace DataLayer.Repository
             _context = context;
         }
 
-        public async Task<Store> GetStoreByCode(int code)
-        {
-            var res = _context.Stores.Where(x => x.SupplierID == code.ToString()).FirstOrDefault();
+        //public async Task<Store> GetStoreByCode(int code)
+        //{
+        //    var res = _context.Stores.Where(x => x.WarehouseID == code).FirstOrDefault();
 
-            return res;
-        }
+        //    return res;
+        //}
        public async Task<List<Store>> GetStore()
         {
             var res = _context.Stores.ToList();
@@ -37,7 +37,7 @@ namespace DataLayer.Repository
         public async Task<ServiceResponse<bool>> AddStore(Store store)
         {
             _context.Stores.Add(store);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return new ServiceResponse<bool>() {  
                 Data = true,
                 Success = true,

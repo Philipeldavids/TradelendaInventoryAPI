@@ -162,7 +162,7 @@ namespace TradelendaInventoryAPI.Controllers
         }
 
         [HttpDelete("DeleteUser/{id}")]
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> DeleteUser(string id)
         {
             var result = await _userService.DeleteUserAsync(id);

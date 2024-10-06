@@ -227,6 +227,7 @@ namespace TradelendaInventoryAPI.Controllers
 
             }
         }
+
         [HttpDelete("{Id}")]
         public async Task<ActionResult> DeleteSupplier(string Id)
         {

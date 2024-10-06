@@ -240,7 +240,7 @@ namespace DataLayer.Repository
             if (supplr != null)
             {
                 _context.Suppliers.Remove(supplr);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return new ServiceResponse<bool>()
                 {
                     Data = true,

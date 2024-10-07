@@ -92,7 +92,7 @@ namespace BusinessLogic.Services
             product2.UnitCost = product.UnitCost;
             product2.ManufacturedDate = product.ManufacturedDate;
             product2.Barcode = product.Barcode;
-            product2.CreatedAt = DateTime.Now;
+            product2.CreatedAt = DateTime.UtcNow;
             product2.CreatedBy = "ShopOwner";
             product2.Unit = product.Unit;
            

@@ -61,7 +61,7 @@ namespace DataLayer.Repository
         {
             Brand brand1 = new Brand();
             brand1.BrandName = brand.BrandName;
-            brand1.CreatedOn = DateTime.Now;
+            brand1.CreatedOn = DateTime.UtcNow;
             brand1.Logo = brand.Logo;
             brand1.Status = brand.Status;
 

@@ -131,11 +131,11 @@ if (app.Environment.IsDevelopment())
 //    var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 //    dbContext.Database.EnsureCreated();
 //}
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.EnsureCreated();  // Ensures database is created
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+//    dbContext.Database.EnsureCreated();  // Ensures database is created
+//}
 
 app.UseHttpsRedirection();
 

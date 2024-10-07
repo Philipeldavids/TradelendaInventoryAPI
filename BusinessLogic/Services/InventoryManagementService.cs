@@ -77,6 +77,9 @@ namespace BusinessLogic.Services
             var brand = await _inventoryManagementRepository.GetBrandById(product.Brand);
             Product product2 = new Product();
 
+            product2.Store = product.Store;
+            product2.ProductImageUrl = product.ProductImageUrl;
+            product2.IsExpired = false;
             product2.SKU = product.SKU;
             product2.Quantity = product.Quantity;
             product2.ProductImageUrl = product.ProductImageUrl;
@@ -86,8 +89,7 @@ namespace BusinessLogic.Services
             product2.Price = product.Price;
             product2.Category = category;
             product2.Category.CategorySLug = category.CategoryName;
-            product2.Brand = brand;
-            product2.Store = product.Store;
+            product2.Brand = brand;            
             product2.Warehouse = product.Warehouse;
             product2.UnitCost = product.UnitCost;
             product2.ManufacturedDate = product.ManufacturedDate;
@@ -95,7 +97,7 @@ namespace BusinessLogic.Services
             product2.CreatedAt = DateTime.UtcNow;
             product2.CreatedBy = "ShopOwner";
             product2.Unit = product.Unit;
-           
+            
             var res = await _inventoryManagementRepository.AddProducts(product2);
             //var warehouseEmail = _peoplerepo.GetWarehouse().Result.Where(x => x.WarehouseId == product.Warehouse).Select(x=>x.supplier.Email).FirstOrDefault();
 

@@ -63,7 +63,7 @@ namespace BusinessLogic.Services
             user.UserName = customer.Email;
             user.IsActive = false;
             user.RefreshToken = _tokenService.GenerateRefreshToken();
-            user.Role = Roles.ShopOwner;
+            user.Role = Roles.Customer;
             user.UserProfil.UserId = user.UserId;
             user.PasswordHash = _passwordHasher.HashPassword(user, password);
             user.UserProfil.PhoneNumber = customer.PhoneNumber;

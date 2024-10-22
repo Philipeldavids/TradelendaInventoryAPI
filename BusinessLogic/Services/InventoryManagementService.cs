@@ -85,14 +85,14 @@ namespace BusinessLogic.Services
             product2.ProductImageUrl = product.ProductImageUrl;
             product2.ProductName = product.ProductName;
             product2.ProductDescription = product.ProductDescription;
-            product2.ExpiredDate = product.ExpiredDate;
+            product2.ExpiredDate = product.ExpiredDate.ToUniversalTime();
             product2.Price = product.Price;
             product2.Category = category;
             product2.Category.CategorySLug = category.CategoryName;
             product2.Brand = brand;            
             product2.Warehouse = product.Warehouse;
             product2.UnitCost = product.UnitCost;
-            product2.ManufacturedDate = product.ManufacturedDate;
+            product2.ManufacturedDate = product.ManufacturedDate.ToUniversalTime();
             product2.Barcode = product.Barcode;
             product2.CreatedAt = DateTime.UtcNow;
             product2.CreatedBy = "ShopOwner";

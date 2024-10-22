@@ -157,8 +157,11 @@ namespace DataLayer.Repository
         {
                         
             _context.Products.Add(product);
-            _context.SaveChanges();
-            return true;
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> EditProduct(Product produt, string Id)
